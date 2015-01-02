@@ -49,3 +49,16 @@ body {
 .author a {
     color: #ee4444;
 }
+
+.continue {
+    margin-top: 20px;
+}
+
+.continue a {
+    display: inline;
+    padding: 3px 5px;
+    border-radius: 5px;
+    background-color: #4477aa;
+    color: white;
+    font-weight: bold;
+}
