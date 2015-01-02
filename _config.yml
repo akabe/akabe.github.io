@@ -16,7 +16,7 @@ github: 'akabe'
 twitter: 'ackey_65535'
 
 # Set this to your UA-# value, or '' to disable the block completely
-gaaccount: ''
+gaaccount: 'UA-58142361-1'
 
 permalink: /:year/:month/:title
 paginate: 3
