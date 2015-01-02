@@ -62,3 +62,12 @@ body {
     color: white;
     font-weight: bold;
 }
+
+.sns {
+    height: 80px;
+}
+
+.sns_button {
+    float: left;
+    margin: 10px 5px;
+}

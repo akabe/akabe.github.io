@@ -14,6 +14,23 @@
             </div>
             </div>
           </div>
+          <div class="sns">
+            <!-- Twitter: https://dev.twitter.com/web/tweet-button -->
+            <div class="sns_button">
+              <a href="http://twitter.com/share" class="twitter-share-button" data-url="{{ site.url}}{{ page.url }}"
+                 data-text="{{ page.title }}" data-via="ackey_65535" data-count="vertical" data-lang="ja">Tweet</a>
+              <script type="text/javascript" src="http://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+            <!-- Facebook: https://developers.facebook.com/docs/plugins/like-button?locale=ja_JP -->
+            <div class="sns_button">
+              <div class="fb-like" data-href="{{ site.url}}{{ page.url }}" data-layout="box_count" data-action="like" data-show-faces="true" data-share="false"></div>
+            </div>
+            <!-- Hatena bookmark: http://b.hatena.ne.jp/guide/bbutton -->
+            <div class="sns_button">
+              <a href="http://b.hatena.ne.jp/entry/{{ site.url}}{{ page.url }}" class="hatena-bookmark-button" data-hatena-bookmark-title="{{ page.title }}" data-hatena-bookmark-layout="vertical-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+            </div>
+          </div>
+          <hr>
           <div class="pagination">
               {% if page.next %}
                 <a class="btn btn-default" href="{{ site.baseurl}}{{ page.next.url }}" class="next">Newer Post</a>
