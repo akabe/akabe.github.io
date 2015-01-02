@@ -67,3 +67,22 @@ body {
     float: left;
     margin: 10px 5px;
 }
+
+table {
+    border-collapse: collapse;
+}
+
+tr:nth-child(even) {
+    background: #ddddff;
+}
+
+th, td {
+    padding: 5px 10px;
+    border: 1px solid #cccccc;
+}
+
+th {
+    color: #ffffff;
+    font-weight: bold;
+    background-color: #4477aa;
+}

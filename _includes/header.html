@@ -9,8 +9,11 @@
     <script src="{{ site.baseurl }}/js/bootstrap.min.js"></script>
     <link href="{{ site.baseurl }}/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ site.baseurl }}/css/theme.css" rel="stylesheet">
+    <link href="{{ site.baseurl }}/css/github.css" rel="stylesheet">
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
+      extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+      "TeX/noErrors.js","TeX/noUndefined.js"],
       tex2jax: {
         inlineMath: [['$','$'], ['\\(','\\)']],
         displayMath: [['$$','$$'], ['\\[','\\]']],
@@ -21,6 +24,7 @@
           Real: '{\\mathbb R}',
           Int: '{\\mathbb Z}',
           Nat: '{\\mathbb N}',
+          dd: '{\\mathrm d}',
           bm: ['{\\boldsymbol #1}', 1]
         }
       }});
