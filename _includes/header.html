@@ -9,6 +9,23 @@
     <script src="{{ site.baseurl }}/js/bootstrap.min.js"></script>
     <link href="{{ site.baseurl }}/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ site.baseurl }}/css/theme.css" rel="stylesheet">
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+      },
+      TeX: {
+        Macros: {
+          Complex: '{\\mathbb C}',
+          Real: '{\\mathbb R}',
+          Int: '{\\mathbb Z}',
+          Nat: '{\\mathbb N}',
+          bm: ['{\\boldsymbol #1}', 1]
+        }
+      }});
+    </script>
+    <script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </head>
 
 <body>
