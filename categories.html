@@ -1,0 +1,14 @@
+---
+layout: default
+---
+
+<div class="well">
+{% for category in site.categories %}
+  <h1 id="{{ category[0] }}">{{ category[0] }}</h1>
+  <ul>
+    {% for post in category[1] %}
+    <li><a href="{{ site.baseurl }}{{ post.url }}">{{ post.date | date: "%b %-d, %Y" }} - {{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
+{% endfor %}
+</div>
