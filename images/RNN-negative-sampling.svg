@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg id="svg5841" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" height="117.9" width="431.29" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/">
+ <defs id="defs5843">
+  <marker id="Arrow1MendYu" refY="0" refX="0" orient="auto">
+   <path id="path6716" d="M0,0,5-5-12.5,0,5,5,0,0z" fill-rule="evenodd" transform="matrix(-0.4,0,0,-0.4,-4,0)" stroke="#00F" stroke-width="1pt" fill="#00F"/>
+  </marker>
+  <linearGradient id="linearGradient6782" y2="675.31" gradientUnits="userSpaceOnUse" x2="532.46" y1="675.31" x1="259">
+   <stop id="stop6778" stop-color="#F00" offset="0"/>
+   <stop id="stop6780" stop-color="#00F" offset="1"/>
+  </linearGradient>
+ </defs>
+ <metadata id="metadata5846">
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <g id="layer1" transform="translate(-110.20422,-567.36218)">
+  <rect id="rect6681" ry="9" height="25" width="145" y="567.36" x="125" fill="#C00"/>
+  <path id="path12926-8-2-5-1-1" stroke-linejoin="round" style="marker-end:none;" d="m130,647.07,45-30" stroke-dashoffset="0" stroke="#000" stroke-linecap="round" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="1" fill="none"/>
+  <text id="text12067-1-3-7-8-1-8-73-5-2-5" style="letter-spacing:0px;word-spacing:0px;" line-height="125%" font-family="Sans" xml:space="preserve" font-size="10px" y="662.07422" x="130" font-weight="normal" font-style="normal" fill="#000000"><tspan id="tspan12069-9-7-4-2-0-6-32-2-1-5" style="text-anchor:middle;text-align:center;" font-family="FreeSerif" font-size="18px" font-style="normal" font-stretch="normal" font-variant="normal" y="662.07422" x="130" font-weight="normal">Const</tspan></text>
+  <text id="text12067-1-3-7-8-1-8-73-5-7-2-8" style="letter-spacing:0px;word-spacing:0px;" line-height="125%" font-family="Sans" xml:space="preserve" font-size="10px" y="612.36218" x="190" font-weight="normal" font-style="normal" fill="#000000"><tspan id="tspan12069-9-7-4-2-0-6-32-2-5-7-3" style="text-anchor:middle;text-align:center;" font-family="FreeSerif" font-size="18px" font-style="normal" font-stretch="normal" font-variant="normal" y="612.36218" x="190" font-weight="normal">BinaryOp</tspan></text>
+  <text id="text12067-1-3-7-8-1-8-73-5-7-7-9" style="letter-spacing:0px;word-spacing:0px;" line-height="125%" font-family="Sans" xml:space="preserve" font-size="10px" y="662.07422" x="255.20422" font-weight="normal" font-style="normal" fill="#ff0000"><tspan id="tspan12069-9-7-4-2-0-6-32-2-5-2-9" style="text-anchor:middle;text-align:center;" font-family="FreeSerif" font-size="18px" font-style="normal" font-stretch="normal" font-variant="normal" y="662.07422" x="255.20422" font-weight="normal" fill="#ff0000">BinaryOp</tspan></text>
+  <path id="path12926-8-2-6-7-0-7" stroke-linejoin="round" style="marker-end:none;" d="m255,647.36-45-30" stroke-dashoffset="0" stroke="#000" stroke-linecap="round" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="1" fill="none"/>
+  <path id="path12926-8-2-5-1-1-5" stroke-linejoin="round" style="marker-end:none;" d="m410,647.07,45-30" stroke-dashoffset="0" stroke="#000" stroke-linecap="round" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="1" fill="none"/>
+  <text id="text12067-1-3-7-8-1-8-73-5-2-5-5" style="letter-spacing:0px;word-spacing:0px;" line-height="125%" font-family="Sans" xml:space="preserve" font-size="10px" y="662.07422" x="410" font-weight="normal" font-style="normal" fill="#000000"><tspan id="tspan12069-9-7-4-2-0-6-32-2-1-5-9" style="text-anchor:middle;text-align:center;" font-family="FreeSerif" font-size="18px" font-style="normal" font-stretch="normal" font-variant="normal" y="662.07422" x="410" font-weight="normal">Const</tspan></text>
+  <text id="text12067-1-3-7-8-1-8-73-5-7-2-8-5" style="letter-spacing:0px;word-spacing:0px;" line-height="125%" font-family="Sans" xml:space="preserve" font-size="10px" y="612.36218" x="470" font-weight="normal" font-style="normal" fill="#000000"><tspan id="tspan12069-9-7-4-2-0-6-32-2-5-7-3-8" style="text-anchor:middle;text-align:center;" font-family="FreeSerif" font-size="18px" font-style="normal" font-stretch="normal" font-variant="normal" y="612.36218" x="470" font-weight="normal">BinaryOp</tspan></text>
+  <text id="text12067-1-3-7-8-1-8-73-5-7-7-9-0" style="letter-spacing:0px;word-spacing:0px;" line-height="125%" font-family="Sans" xml:space="preserve" font-size="10px" y="662.07422" x="535.20422" font-weight="normal" font-style="normal" fill="#0000ff"><tspan id="tspan12069-9-7-4-2-0-6-32-2-5-2-9-3" style="text-anchor:middle;text-align:center;" font-family="FreeSerif" font-size="18px" font-style="normal" font-stretch="normal" font-variant="normal" y="662.07422" x="535.20422" font-weight="normal" fill="#0000ff">If</tspan></text>
+  <path id="path12926-8-2-6-7-0-7-9" stroke-linejoin="round" style="marker-end:none;" d="m535,647.36-45-30" stroke-dashoffset="0" stroke="#000" stroke-linecap="round" stroke-miterlimit="4" stroke-dasharray="none" stroke-width="1" fill="none"/>
+  <path id="path5930" style="marker-end:url(#Arrow1MendYu);" d="m260,672.36c90.747,19.246,180.6,13.366,270-5" stroke="url(#linearGradient6782)" stroke-dasharray="none" stroke-miterlimit="4" stroke-width="2" fill="none"/>
+  <text id="text6677" style="letter-spacing:0px;word-spacing:0px;" line-height="125%" font-weight="normal" font-size="10px" font-style="normal" y="584.66156" x="136.37059" font-family="Sans" xml:space="preserve" fill="#ffffff"><tspan id="tspan6679" font-size="16px" y="584.66156" x="136.37059" fill="#ffffff">Positive sample</tspan></text>
+  <rect id="rect6681-1" ry="9" height="25" width="145" y="567.36" x="395" fill="#00C"/>
+  <text id="text6677-5" style="letter-spacing:0px;word-spacing:0px;" line-height="125%" font-weight="normal" font-size="10px" font-style="normal" y="584.66156" x="400" font-family="Sans" xml:space="preserve" fill="#ffffff"><tspan id="tspan6679-1" font-size="16px" y="584.66156" x="400" fill="#ffffff">Negative sample</tspan></text>
+ </g>
+</svg>
