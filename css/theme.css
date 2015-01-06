@@ -86,3 +86,26 @@ th {
     font-weight: bold;
     background-color: #4477aa;
 }
+
+.categories {
+    padding: 0px 0px 10px 0px;
+}
+
+.category, .category:hover, .category:active {
+    display: inline;
+    padding: 3px 5px;
+    border-radius: 3px;
+    background-color: #999999;
+    color: white;
+    text-decoration: none;
+}
+
+.category:hover {
+    text-decoration: underline;
+}
+
+.label {
+    margin-top: -60px;
+    padding-top: 60px;
+    font-weight: normal;
+}

@@ -6,6 +6,11 @@ layout: default
 <div class="article">
     <div class="well">
         <h1><a href="{{ site.baseurl}}{{ post.url }}">{{ post.date | date: "%b %-d, %Y" }} - {{ post.title }}</a></h1>
+        <div class="categories">
+          {% for category in post.categories %}
+          <a class="category" href="{{ site.baseurl }}/categories.html#{{ category }}">{{ category }}</a>
+          {% endfor %}
+        </div>
         <div class="content">
             {{ post.excerpt }}
             <div class="continue">
