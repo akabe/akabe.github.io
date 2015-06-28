@@ -1,7 +1,7 @@
 /* https://github.com/richleland/pygments-css/blob/master/github.css */
 
 .highlight .hll { background-color: #ffffcc }
-.highlight .c { color: #999988; font-style: italic } /* Comment */
+.highlight .c { color: #666666; font-style: italic } /* Comment */
 .highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
 .highlight .k { color: #000000; font-weight: bold } /* Keyword */
 .highlight .o { color: #000000; font-weight: bold } /* Operator */

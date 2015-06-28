@@ -35,12 +35,14 @@ body {
 
 .well h1 {
     color: #ee4444;
-    font-size: 1.8em;
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
 .well h2 {
-    color: #4444ee;
+    color: #ee4444;
     font-size: 1.3em;
+    font-weight: bold;
 }
 
 .author {
@@ -110,7 +112,8 @@ th {
 }
 
 .label {
-    margin-top: -60px;
-    padding-top: 60px;
-    font-weight: normal;
+    /*margin-top: -60px;
+    padding-top: 60px;*/
+  font-size: 1.2em !important;
+  font-weight: normal !important;
 }
