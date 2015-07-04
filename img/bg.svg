@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="新規ドキュメント 1">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="5.6"
+     inkscape:cx="234.11022"
+     inkscape:cy="823.08274"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:window-width="1365"
+     inkscape:window-height="681"
+     inkscape:window-x="1"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2985" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="レイヤー 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#00112b;fill-opacity:1;stroke:none"
+       id="rect2987"
+       width="20"
+       height="20"
+       x="195"
+       y="202.36218"
+       inkscape:export-filename="/home/akinori/devel/blog-theme/img/sq.png"
+       inkscape:export-xdpi="70"
+       inkscape:export-ydpi="70" />
+    <g
+       id="g3078"
+       style="fill:#002255"
+       inkscape:export-filename="/home/akinori/devel/blog-theme/img/sq.png"
+       inkscape:export-xdpi="70"
+       inkscape:export-ydpi="70">
+      <path
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path2989"
+         d="m 195,204.86218 0,2.5 5,-5 -2.5,0"
+         style="fill:#002255;fill-opacity:1;stroke:none" />
+      <path
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path2989-2"
+         d="m 195,209.86218 0,2.5 10,-10 -2.5,0"
+         style="fill:#002255;fill-opacity:1;stroke:none" />
+      <path
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path2989-7"
+         d="m 212.5,202.36218 -2.5,0 5,5 0,-2.5"
+         style="fill:#002255;fill-opacity:1;stroke:none" />
+      <path
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path2989-2-5"
+         d="m 207.5,202.36218 -2.5,0 10,10 0,-2.5"
+         style="fill:#002255;fill-opacity:1;stroke:none" />
+      <path
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path2989-4"
+         d="m 195,219.86218 0,-2.5 5,5 -2.5,0"
+         style="fill:#002255;fill-opacity:1;stroke:none" />
+      <path
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path2989-2-2"
+         d="m 195,214.86218 0,-2.5 10,10 -2.5,0"
+         style="fill:#002255;fill-opacity:1;stroke:none" />
+      <path
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path2989-7-6"
+         d="m 212.5,222.36218 -2.5,0 5,-5 0,2.5"
+         style="fill:#002255;fill-opacity:1;stroke:none" />
+      <path
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path2989-2-5-6"
+         d="m 207.5,222.36218 -2.5,0 10,-10 0,2.5"
+         style="fill:#002255;fill-opacity:1;stroke:none" />
+    </g>
+  </g>
+</svg>

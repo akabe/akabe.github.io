@@ -1,14 +1,36 @@
-{% include header.html %}
+<!DOCTYPE html>
+<html lang="ja">
 
-<div class="container container-left">
-    <div class="row">
-        <div class="col-md-3 hidden-xs">
-            {% include sidebar.html %}
-        </div>
+  {% include head.html %}
+
+  <body>
+
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3";
+      fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));</script>
+
+    {% include header.html %}
+
+    <div class="container">
+      <div class="row">
         <div class="col-md-9">
-            {{ content }}
+          {{ content }}
         </div>
+        <div class="col-md-3 sidebar">
+          {% include sidebar.html %}
+        </div>
+      </div>
     </div>
-</div>
 
-{% include footer.html %}
+    {% include footer.html %}
+
+    <!-- load js -->
+    <script type="text/javascript" src="{{ "/js/jquery-1.11.3.min.js" | prepend: site.baseurl }}"></script>
+    <script type="text/javascript" src="{{ "/js/bootstrap.min.js" | prepend: site.baseurl }}"></script>
+  </body>
+</html>

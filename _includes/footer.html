@@ -1,14 +1,17 @@
-<div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span12 footer">
-            <p class="copyright">&copy;{{ site.time | date: '%Y' }} {{ site.name }}. Powered by <a href="http://jekyllrb.com">Jekyll</a>, theme by <a href="https://github.com/scotte/jekyll-clean">Scott Emmons</a>
-            under
-            <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution</a></p>
-        </div>
-    </div>
-</div>
+<footer class="footer">
+  <div class="container">
+    &copy; 2015 akabe
+
+    {% if site.github_username %}
+    <a class="footer-link" href="https://github.com/{{ site.github_username }}">GitHub</a>
+    {% endif %}
+    {% if site.twitter_username %}
+    <a class="footer-link" href="https://twitter.com/{{ site.twitter_username }}">Twitter</a>
+    {% endif %}
+    {% if site.qiita_username %}
+    <a class="footer-link" href="https://qiita.com/{{ site.qiita_username }}">Qiita</a>
+    {% endif %}
+  </div>
+</footer>
 
 {% include analytics.html %}
-
-</body>
-</html>

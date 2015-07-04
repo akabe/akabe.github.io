@@ -1,25 +1,19 @@
-# Jekyll configuration
+# Site settings
+title: Alpha Beta Epsilon
+email:
+description: プログラミングの覚書
 
-name: αβε
-description: プログラミングとか機械学習とかの覚書
+baseurl: ''
+url: 'http://akabe.github.io'
 
-# url is currently only used only for the RSS feed in feed.xml
-url: http://akabe.github.io
-
-# baseurl will often be '', but for a project page on gh-pages, it needs to
-# be the project name.
-# *** IMPORTANT: If your local "jekyll serve" throws errors change this to '' or
-#     run it like so: jekyll serve --baseurl=''
-baseurl:
-
-github: 'akabe'
-twitter: 'ackey_65535'
-
-# Set this to your UA-# value, or '' to disable the block completely
+# Your accounts:
+twitter_username: 'ackey_65535'
+github_username:  'akabe'
+qiita_username: 'akabe'
 gaaccount: 'UA-58142361-1'
 
 permalink: /:year/:month/:title
-paginate: 3
+paginate: 5
 
 highlighter: pygments
 markdown: redcarpet

@@ -1,0 +1,32 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="{{ '/css/bootstrap.min.css' | prepend: site.baseurl }}">
+  <link rel="stylesheet" href="{{ '/css/theme.css' | prepend: site.baseurl }}">
+  <link rel="stylesheet" href="{{ '/css/github.css' | prepend: site.baseurl }}">
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+  <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <meta name="description" content="{{ site.description }}">
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+     extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                  "TeX/noErrors.js","TeX/noUndefined.js"],
+     tex2jax: {
+       inlineMath: [['$','$'], ['\\(','\\)']],
+       displayMath: [['$$','$$'], ['\\[','\\]']],
+     },
+     TeX: {
+       Macros: {
+         Complex: '{\\mathbb C}',
+         Real: '{\\mathbb R}',
+         Int: '{\\mathbb Z}',
+         Nat: '{\\mathbb N}',
+         dd: '{\\mathrm d}',
+         bm: ['{\\boldsymbol #1}', 1],
+         argmin: '\\mathop{\\mathrm{arg\\,min}}'
+       }
+     }});
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>

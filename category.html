@@ -1,0 +1,14 @@
+---
+layout: default
+---
+
+{% for category in site.categories %}
+  <article>
+  <h1 id="{{ category[0] }}">{{ category[0] }}</h1>
+  <ul class="archive-list whitebox">
+    {% for post in category[1] %}
+    <li><a href="{{ site.baseurl }}{{ post.url }}">{{ post.date | date: "%Y/%m/%d" }} - {{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
+{% endfor %}
+</article>

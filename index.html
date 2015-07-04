@@ -3,33 +3,31 @@ layout: default
 ---
 
 {% for post in paginator.posts %}
-<div class="article">
-    <div class="well">
-        <h1><a href="{{ site.baseurl}}{{ post.url }}">{{ post.date | date: "%b %-d, %Y" }} - {{ post.title }}</a></h1>
-        <div class="categories">
-          {% for category in post.categories %}
-          <a class="category" href="{{ site.baseurl }}/categories.html#{{ category }}">{{ category }}</a>
-          {% endfor %}
-        </div>
-        <div class="content">
-            {{ post.excerpt }}
-            <div class="continue">
-              <a href="{{ post.url | prepend: site.baseurl }}">Read more</a>
-            </div>
-        </div>
-    </div>
-</div>
+<article>
+  <div class="post-date">{{ post.date | date: "%Y/%m/%d" }}</div>
+  <div class="post-categories">
+    Categories:
+    {% for category in post.categories %}
+    <a class="post-category" href="{{ site.baseurl }}/category.html#{{ category }}">{{ category }}</a>
+    {% endfor %}
+  </div>
+  <h1 class="post-title"><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h1>
+  <div class="post-abstract whitebox">
+    {{ post.excerpt }}
+  </div>
+  <div class="btn btn-default"><a href="{{ post.url | prepend: site.baseurl }}">Read more</a></div>
+</article>
 {% endfor %}
 
 <div class="pagination">
   {% if paginator.previous_page %}
-      {% if paginator.previous_page == 1 %}
-        <a class="btn btn-default" href="{{ site.baseurl}}/index.html" class="previous">Newer</a>
-      {% else %}
-        <a class="btn btn-default" href="{{ site.baseurl}}/page{{ paginator.previous_page }}" class="previous">Newer</a>
-      {% endif %}
+    {% if paginator.previous_page == 1 %}
+    <a class="btn btn-default" href="{{ site.baseurl}}/index.html" class="previous">Newer</a>
+    {% else %}
+    <a class="btn btn-default" href="{{ site.baseurl}}/page{{ paginator.previous_page }}" class="previous">Newer</a>
+    {% endif %}
   {% endif %}
-  <span class="page_number ">Page: {{ paginator.page }} of {{ paginator.total_pages }}</span>
+  <span>Page: {{ paginator.page }} of {{ paginator.total_pages }}</span>
   {% if paginator.next_page %}
     <a class="btn btn-default" href="{{ site.baseurl}}/page{{ paginator.next_page }}" class="next">Older</a>
   {% endif %}
