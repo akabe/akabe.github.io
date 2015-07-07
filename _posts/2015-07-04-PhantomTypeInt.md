@@ -241,11 +241,11 @@ val sub : ('m, 'n) t -> ('k, 'n) t -> ('m, 'k) t
 ## 実装
 
 今までのアイディアをまとめて実装すると、以下のようになります。
+ここまでの説明でお分かりと思いますが、幽霊型 `z` は使わないので、定義していません。
 
 ```OCaml
 module KInt : sig
   type ('m, 'n) t = private int
-  type z
   type 'n s
 
   val zero : ('n, 'n) t
@@ -255,7 +255,6 @@ module KInt : sig
   val sub : ('m, 'n) t -> ('k, 'n) t -> ('m, 'k) t
 end = struct
   type ('m, 'n) t = int
-  type z
   type 'n s
 
   let zero = 0
