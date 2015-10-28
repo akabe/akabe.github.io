@@ -25,7 +25,7 @@ RAE は次の図のように，
 子の特徴ベクトル $\\mathbf{vec}(c\_1), \\dots, \\mathbf{vec}(c\_M)$ の情報を圧縮して，
 親の特徴ベクトル $\\mathbf{vec}(p)$ を計算する．
 
-<center>![Unfolding RAE Encoder]({{ site.baseurl }}/images/UnfoldingRAE-encoder.png)</center>
+<center>![Unfolding RAE Encoder]({{ site.baseurl }}/img/UnfoldingRAE-encoder.png)</center>
 
 ただし，$M$ は子の個数（ノードによって異なる），$\\bm{a}(p)$ はノード $p$ の**活性**(activation)，
 $f : \\Real^D \\to \\Real^D$ は**活性化関数**(activation function)，
@@ -49,14 +49,14 @@ RAE の中で，次元圧縮を行う部分を**エンコーダ**と呼ぶ．
 機械学習では，次元削減の逆，つまり，圧縮された情報を解凍することを**再構築** (reconstruction) と呼び，
 RAE の中では**デコーダ**と呼ばれる部分が再構築を担当する．
 
-<center>![Unfolding RAE Decoder]({{ site.baseurl }}/images/UnfoldingRAE-decoder.png)</center>
+<center>![Unfolding RAE Decoder]({{ site.baseurl }}/img/UnfoldingRAE-decoder.png)</center>
 
 ここで，$\\bm{b}' \\in \\Real^D$ はバイアス，
 $\\bm{W}\_m' = (1 - \\alpha\_m) \\bm{W}\_\\mathrm{L}' + \\alpha\_m \\bm{W}\_\\mathrm{R}' \\in \\Real^{D \\times D}$ は重み行列です．
 
 このエンコーダ，デコーダを次の図のように，多層に積み上げたものが Unfolding Recursive Autoencoder である．
 
-<center>![Unfolding RAE Decoder]({{ site.baseurl }}/images/UnfoldingRAE-vecs.png)</center>
+<center>![Unfolding RAE Decoder]({{ site.baseurl }}/img/UnfoldingRAE-vecs.png)</center>
 
 Unfoling RAE のエンコーダは葉の特徴ベクトルを次元削減して，根の特徴ベクトルを計算する．
 デコーダはその逆で，根の特徴ベクトルから葉の特徴ベクトルを再構築する．

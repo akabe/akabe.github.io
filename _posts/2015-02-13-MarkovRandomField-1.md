@@ -39,7 +39,7 @@ $p(y | x)$ を表します．主に，確率変数間の因果関係を表現す
 ループがあると少し話がややこしいので，今日は次の図ような木構造を持つ無向グラフを考えてみます．
 図中でどのノードが根であるかは，あまり意味がないので，明示していません（根とそれ以外のノードを区別して扱う必要がない）．
 
-<center>![マルコフ確率場の例]({{site.baseurl}}/images/MRF-tree-example.png)</center>
+<center>![マルコフ確率場の例]({{site.baseurl}}/img/MRF-tree-example.png)</center>
 
 この図中の $x\_i$ は確率変数であり（グラフィカルモデルでは，各ノードに確率変数が割り当てられます），
 $f\_i$, $g\_{ij}$ はそれぞれ，ノードと辺の**エネルギー**を計算する関数で，
@@ -209,7 +209,7 @@ $$
 先程定義したメッセージの式をよく見ると，子ノードから親ノードに向かってメッセージを伝搬しているように見えます．
 図で書くと，次のようなイメージ．
 
-<center>![マルコフ確率場におけるメッセージ伝搬]({{site.baseurl}}/images/MRF-tree-marginal-probability.png)</center>
+<center>![マルコフ確率場におけるメッセージ伝搬]({{site.baseurl}}/img/MRF-tree-marginal-probability.png)</center>
 
 基本的に，同様の方法で，他の確率変数に関する周辺確率も求めることができます．
 ノード $i$ に接続されているノードの集合を $V\_i$ として，もう少し一般的に書くと，
@@ -281,7 +281,7 @@ max-sum アルゴリズムにより，同時確率の最大値を与える確率
 AAA, AAB, ABA, ABB, BAA, BAB, BBA, BBB の8種類になります．
 これらの具体値の組合せを，図(a)下のような**トレリス図** (trellis diagram) で表します．
 
-<center>![max-sum アルゴリズム]({{site.baseurl}}/images/MRF-tree-viterbi.png)</center>
+<center>![max-sum アルゴリズム]({{site.baseurl}}/img/MRF-tree-viterbi.png)</center>
 
 まず，図(b)のように，$x\_3$ から $x\_2$ に向かってメッセージパッシングを行うと，
 

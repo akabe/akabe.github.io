@@ -21,7 +21,7 @@ RNN では，子を表現する特徴ベクトルを用いて，親を表現す�
 例えば，`42 + 123 * foo` というプログラムを構文解析して，次の図の左のような構文木が得られたとしよう．
 この構文木を表現する特徴ベクトルは，右図のような RNN で計算される．
 
-<center>![RNN と構文木]({{ site.baseurl }}/images/RNN-and-syntax-tree.png)</center>
+<center>![RNN と構文木]({{ site.baseurl }}/img/RNN-and-syntax-tree.png)</center>
 
 RNN の細かい計算はさておき，大雑把な動作を先に説明しておく．
 まず，葉に対応する特徴ベクトルが何らかの手段で予め得られているとしよう．
@@ -50,7 +50,7 @@ $\\bm{W}\_m \\in \\Real^{D \times D}$ は重み行列，
 $\\bm{b} \\in \\Real^D$ はバイアス項，$f : \\Real^D \\to \\Real^D$ は活性化関数である．
 この計算は，次のような模式図で表される．
 
-<center>![RNN のユニット]({{ site.baseurl }}/images/RNN-unit-vecs.png)</center>
+<center>![RNN のユニット]({{ site.baseurl }}/img/RNN-unit-vecs.png)</center>
 
 基本的には，普通のニューラルネットと変わらないように思われるが，
 子の数 $M$ がノードごとに異なるという，重大な違いがある．
@@ -99,7 +99,7 @@ $$\\bm{\\delta}(x) = \\frac{\\partial E}{\\partial \\bm{a}(x)}$$
 とおく（$x$ は任意のノード）．RNN の順伝搬では，子の特徴ベクトルを基に親の特徴ベクトルを計算するので，
 逆伝搬では親 $p$ の誤差を基に子 $c\_m$ の誤差を計算する．
 
-<center>![RNN の逆伝搬]({{ site.baseurl }}/images/RNN-feedback.png)</center>
+<center>![RNN の逆伝搬]({{ site.baseurl }}/img/RNN-feedback.png)</center>
 
 $$\\bm{\\delta}(c\_m) = \\left( \\bm{W}\_m^\\top \\bm{\\delta}(p) \\right) \\otimes f'(\\bm{a}(c\_m))$$
 
