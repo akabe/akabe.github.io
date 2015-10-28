@@ -134,6 +134,10 @@ a:visited {
     padding: 10px;
 }
 
+.post-content h3 {
+    font-size: 1.4em;
+}
+
 /* SNS buttons */
 
 .sns {
