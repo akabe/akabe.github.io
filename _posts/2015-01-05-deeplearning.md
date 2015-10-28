@@ -6,12 +6,12 @@ category: 深層学習
 ---
 
 しばらく前の研究室ゼミで発表した，ニューラルネットの歴史と深層学習に関するスライドをアップします．
-[Download PDF]({{ site.baseurl }}/slides/HistoryOfNeuralNetworksAndDeepLearning.pdf)
+[Download PDF]({{ site.baseurl }}/pub/HistoryOfNeuralNetworksAndDeepLearning.pdf)
 
 <center>
 <object type="application/pdf" width="640" height="360"
-    data="{{ site.baseurl }}/slides/HistoryOfNeuralNetworksAndDeepLearning.pdf">
-[Download PDF]({{ site.baseurl }}/slides/HistoryOfNeuralNetworksAndDeepLearning.pdf)
+    data="{{ site.baseurl }}/pub/HistoryOfNeuralNetworksAndDeepLearning.pdf">
+[Download PDF]({{ site.baseurl }}/pub/HistoryOfNeuralNetworksAndDeepLearning.pdf)
 </object>
 </center>
 
