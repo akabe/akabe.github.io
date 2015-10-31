@@ -96,7 +96,7 @@ add x y (* 型エラーを起こすべき! *)
 関数が呼ばれる度に違う型を返すことから、
 私は `?` のことを**生成的な幽霊型** (generative phantom type) と呼んでいます。
 
-## 豆知識：多相型と存在型
+### 豆知識：存在型
 
 OCaml とか Haskell とかやっている人は多相型には馴染があると思います。
 例えば、`let f x = x` と書くと、`'a -> 'a` という型が推論されますが、
@@ -232,6 +232,8 @@ let z = add M.x N.x (* 型エラー (M.n sized_list <> N.n sized_list) *)
 
 ちなみに、SML のファンクターは全て生成的なので、使い分ける必要はありません。
 
+OCaml で書いたサンプルコード: https://gist.github.com/akabe/a16ed3bf95cf0d47e040
+
 ## 第一級モジュールを使う
 
 OCaml 3.12 から**第一級モジュール** (first-class module) がサポートされました。
@@ -256,6 +258,8 @@ let () =
 第一級モジュールは OCaml に後付けで搭載された機能なので、
 文法が**かなりキモい**という欠点がありますが、
 それなりに使える機能です。
+
+OCaml で書いたサンプルコード: https://gist.github.com/akabe/927d913ddf63a79dabf1
 
 ## GADT を使う
 
@@ -291,6 +295,8 @@ Error: This expression has type n#3 t but an expression was expected of type
          n#2 t
        Type n#3 is not compatible with type n#2
 ```
+
+OCaml で書いたサンプルコード: https://gist.github.com/akabe/599de3905a3b01d81429
 
 ## 第一級多相型を使って存在型をエンコード
 
@@ -335,6 +341,8 @@ let () =
 はっきり言って、この方法はプログラムが読み難い上に、型エラーが間接的過ぎて解り難い、
 というのが個人的な感想です。
 
+OCaml で書いたサンプルコード: https://gist.github.com/akabe/53ad9e17f9550ce5d0bc
+
 # 関連研究
 
 生成的な幽霊型を使うと、実行時に初めて決定される情報をコンパイル時に安全に取り扱うことができます。
@@ -367,3 +375,7 @@ Electr. Notes Theor. Comput. Sci, 174(7), pp. 79-104, 2007.
 [PDF](http://okmij.org/ftp/papers/lightweight-static-capabilities.pdf)
 
 です。意外と最近ですね。
+
+### 編集履歴
+
+- 2015/10/29: OCaml で書いたサンプルコードを追加
