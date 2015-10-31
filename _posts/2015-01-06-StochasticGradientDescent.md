@@ -98,7 +98,7 @@ AdaGrad
 AdaGrad では，学習率を以下の式で減衰させる．
 
 $$\\Delta \\theta^{(\\tau)}
-  = - \\frac{\\eta}{\\sqrt{\\sum^\\tau\_{t=0} g\_t}} g\_\\tau^2
+  = - \\frac{\\eta}{\\sqrt{\\sum^\\tau\_{t=0} g\_t^2}} g\_\\tau
   \\quad\\mbox{where}\\quad
   g\_\\tau =
   \\frac{\\partial E(x^{(\\tau)}, \\theta^{(\\tau)})}{\\partial \\theta^{(\\tau)}}$$
@@ -107,7 +107,7 @@ $$\\Delta \\theta^{(\\tau)}
 でも，勾配が小さすぎると，パラメータの変化量が発散してしまうので，
 
 $$\\Delta \\theta^{(\\tau)}
-  = - \\frac{\\eta}{\\sqrt{1 + \\sum^\\tau\_{t=0} g\_t}} g\_\\tau^2$$
+  = - \\frac{\\eta}{\\sqrt{1 + \\sum^\\tau\_{t=0} g\_t^2}} g\_\\tau$$
 
 とかにして，発散をおさえることもあるらしい (cf. http://www.logos.t.u-tokyo.ac.jp/~hassy/deep_learning/adagrad/ )．
 
@@ -158,3 +158,8 @@ http://imgur.com/a/Hqolp にモーメンタムや AdaGrad，AdaDelta の収束�
   ADADELTA: An Adaptive Learning Rate Method.
   CoRR abs/1212.5701,
   2012.](http://arxiv.org/abs/1212.5701)
+
+編集履歴
+========
+
+- 2015/10/31 AdaGrad の式が間違っていたので、修正
