@@ -18,11 +18,11 @@ category: 型レベルプログラミング
 # おさらい：幽霊型によるリストの長さの表現
 
 まだ、幽霊型を知らない人は
-「[幽霊型の紹介]({{ site.baseurl }}/2015-06-28-PhantomTypePeanoTypeNat.md)」
+「[幽霊型の紹介]({{ site.baseurl }}/2015/06/PhantomTypeIntro/)」
 を読むとよいでしょう。
 主にサンプルコードは関数型プログラミング言語 OCaml で書かれていますが、
 Haskell や Scala などでも似たようなことができます。
-今回の話は「[型レベルの自然数]({{ site.baseurl }}/2015-06-28-PhantomTypePeanoTypeNat.md)」
+今回の話は「[型レベルの自然数]({{ site.baseurl }}/2015/06/PhantomTypePeanoTypeNat/)」
 の記事を発展させた内容です。この記事では、`'n sized_list` (= `int list`)
 のような型の幽霊型変数 `'n` にリストの長さを表す幽霊型を代入することで、
 型安全な `hd`/`tl` 関数、つまり空リストに適用すると例外（実行時エラー）ではなく、
