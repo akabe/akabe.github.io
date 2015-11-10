@@ -1,5 +1,6 @@
 body {
   background-color: #e0e0e0;
+  font-size: 18px;
 }
 
 a, a:active {
@@ -64,8 +65,8 @@ td, th {
 /* Header */
 
 .header {
-  background: url('../img/bg.png') repeat fixed;
-  height: 180px;
+  background: #1e1e1e;
+  padding: 1em;
   color: white;
 }
 
@@ -77,25 +78,27 @@ td, th {
   font-size: 1.1em;
 }
 
-.home-link,
-.home-link:hover,
-.home-link:visited {
+.header ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.header li {
+  float: left;
+  margin: 0;
+  padding: 0 1.5em 0 0;
+}
+
+.head-link,
+.head-link:hover,
+.head-link:visited {
   color: white;
   text-decoration: none;
 }
 
-/* Side */
-
-.side-title {
-  font-size: 1em;
-  font-weight: bold;
-  text-align: center;
-  padding: 10px;
-}
-
-.sidebox {
-  padding-top: 5px;
-  padding-bottom: 5px;
+.head-link:hover {
+  color: #ccccff;
 }
 
 /* Posts */
