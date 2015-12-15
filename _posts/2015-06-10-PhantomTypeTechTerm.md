@@ -89,22 +89,21 @@ type output
 ## GADT を「幽霊型」と呼ぶ人
 
 何故か、GADT (Generalized Algebraic Data Type) を「幽霊型」と呼ぶ人もいます。
-確認されている限り、この意味で使う人は、Ralf Hinze くらいなので、派閥と呼ぶほどではありません。
-しかし、Hinze は自分の論文の中で一貫して、GADT を幽霊型と呼んでいるようです。
+確認されている限り、この意味で使う人は、Ralf Hinze とその論文を読んだ人くらいです。
+昔、査読者に幽霊型は GADT とか言われて混乱しましたことがあります。
+Hinze は自分の論文の中で一貫して、GADT を幽霊型と呼んでいるようです。
 以下の論文に登場する *first-class phantom type* が GADT であり、
 *second-class phantom type* が一般的に言われている幽霊型のことです。
 
-- [Type systems. James Cheney and Ralf Hinze. First-class phantom types.
-  Technical Report TR2003-1901, Cornell University, 2003.](https://synrc.com/publications/cat/Temp/FirstClassPhantomTypes.pdf)
+- [James Cheney and Ralf Hinze. First-class phantom types.
+  Technical Report TR2003-1901, Cornell University, 2003.](https://ecommons.cornell.edu/handle/1813/5614)
 
+論文中で明確に GADT とは述べていないものの、本質的には GADT と同じものと思います。
 また、以下の論文でも、GADT を幽霊型と呼んでいるようです。
 
 - [Ralf Hinze. Fun with phantom types. In Jeremy Gibbons and Oege de Moor,
   editors, The Fun of Programming, Cornerstones of Computing,
   pp. 245--262. 2003.](http://www.cs.ox.ac.uk/ralf.hinze/publications/With.pdf)
-
-GADT を使えば、確かに幽霊型と同じようなことができますが、違う概念だと思います。
-この人の論文を初めて見たときは、何が幽霊なのかさっぱり分からず、混乱した思い出があります。
 
 ## 論文の中で「幽霊型」という用語の定義を明確に述べない派
 
@@ -150,3 +149,7 @@ GADT を使えば、確かに幽霊型と同じようなことができますが
 
 なんだか、曖昧なままですみません。
 もし、幽霊型を最初に扱った論文について、知っている人がいたら、教えて下さい。
+
+# 編集履歴
+
+- 2015/12/16 Hinze の phantom type の解釈について編集
