@@ -24,7 +24,7 @@ ML の型システムの範囲では、引数の**型**に応じて、
 [型レベル自然数の記事]({{ site.baseurl }}/2015/06/PhantomTypePeanoTypeNat)
 で、次のようなサイズ型付きリストのコードを紹介しました。
 
-```OCaml
+{% highlight OCaml %}
 module M1 : sig
   type z                   (* ゼロに対応する幽霊型 *)
   type 'n s                (* 後者 ('n + 1) に対応する幽霊型 *)
@@ -38,7 +38,7 @@ end = struct
   let nil = []
   let cons x xs = x :: xs
 end
-```
+{% endhighlight %}
 
 よく見ると、`cons` は引数の**値**に応じて、戻り値型が変化する関数になっています。
 例えば、長さ 0 のリスト (`(z, 'a) sized_list`) を受け取ると、`(z s, 'a) sized_list` を返しますし、
@@ -52,29 +52,29 @@ end
 真偽値と 2 つのリストを受け取り、`true` なら最初のリスト、`false` なら 2 番目のリストを返す関数
 `branch` を考えてみます。
 
-```OCaml
+{% highlight OCaml %}
 let branch b xs ys = if b then xs else ys
-```
+{% endhighlight %}
 
 `xs` と `ys` は同じ長さである必要はないので、
 
-```OCaml
+{% highlight OCaml %}
 val branch : bool -> ('n, 'a) sized_list -> ('n, 'a) sized_list -> ('n, 'a) sized_list
-```
+{% endhighlight %}
 
 なんて、つまんない型を付けたくありません。もしできるなら、
 
-```OCaml
+{% highlight OCaml %}
 val branch : bool -> ('m, 'a) sized_list -> ('n, 'a) sized_list -> ('m, 'a) sized_list
                                                                  (* ^^^ 第 1 引数が true のとき *)
 val branch : bool -> ('m, 'a) sized_list -> ('n, 'a) sized_list -> ('n, 'a) sized_list
                                                                  (* ^^^ 第 1 引数が false のとき *)
-```
+{% endhighlight %}
 
 のように、戻り値型の型変数を真偽値に応じて変えたいわけです。
 そこで、次のように、`('a, 'b, 'c) dbool` という 3 つの幽霊型変数を持つ型を追加します。
 
-```OCaml
+{% highlight OCaml %}
 module M2 : sig
   ... (* M1 と同じ *)
 
@@ -91,7 +91,7 @@ end = struct
   let fls = false
   let branch b xs ys = if b then xs else ys
 end
-```
+{% endhighlight %}
 
 `('k, 'm, 'n) dbool` も `bool` と同じ真偽値型ですが、型変数が 3 つもあるので、
 ゴツい感じしますね。3 つの型変数の意味は、
@@ -106,7 +106,7 @@ end
 `fls` が渡された時は `('n, 'a) sized_list` になります。
 ちょっと、試してみましょうか。
 
-```OCaml
+{% highlight OCaml %}
 # open M2;;
 # let xs = cons 42 nil;;
 val xs : (z s, int) sized_list = <abstr>
@@ -116,7 +116,7 @@ val ys : (z s s, int) sized_list = <abstr>
 - : (z s, int) sized_list = <abstr>
 # branch fls xs ys;; (* ys が返る *)
 - : (z s s, int) sized_list = <abstr>
-```
+{% endhighlight %}
 
 ちゃんと、`tru`、`fls` に応じて、戻り値型が変化してますね！
 
@@ -128,7 +128,7 @@ val ys : (z s s, int) sized_list = <abstr>
 行列の行と列を入れ替える処理ですね。
 サイズ形付き行列を転置する関数とその型は次のように書けます。
 
-```OCaml
+{% highlight OCaml %}
 (* transpose : ('m, ('n, 'a) sized_list) sized_list -> ('n, ('m, 'a) sized_list) sized_list *)
 let transpose mat = (* transpose 関数の動作を理解する必要はない *)
   let rec aux ys xs = match xs, ys with
@@ -138,11 +138,11 @@ let transpose mat = (* transpose 関数の動作を理解する必要はない *
     | x :: xs, y :: ys -> (x :: y) :: aux ys xs
   in
   List.fold_left aux [] mat |> List.map List.rev
-```
+{% endhighlight %}
 
 さらに、真偽値によって転置するかしないかを切り替える関数も書けちゃいます。
 
-```OCaml
+{% highlight OCaml %}
 module M3 : sig
   ... (* M2 と同じ *)
 
@@ -161,11 +161,11 @@ end = struct
     in
     if b then List.fold_left aux [] mat |> List.map List.rev else mat
 end
-```
+{% endhighlight %}
 
 試しに使ってみると、次のようになります。
 
-```OCaml
+{% highlight OCaml %}
 # open M3;;
 # let xs = cons (cons 1 (cons 2 (cons 3 nil))) nil;;
 val xs : (z s, (z s s s, int) sized_list) sized_list = <abstr>
@@ -173,7 +173,7 @@ val xs : (z s, (z s s s, int) sized_list) sized_list = <abstr>
 - : (z s s s, (z s, int) sized_list) sized_list = <abstr>
 # transpose fls xs;;
 - : (z s, (z s s s, int) sized_list) sized_list = <abstr>
-```
+{% endhighlight %}
 
 ちゃんと、`tru` のときは行と列のサイズ型が入れ替わり、
 `fls` のときはそのまま、という動作をしていることが確認できます。
@@ -209,7 +209,7 @@ val xs : (z s, (z s s s, int) sized_list) sized_list = <abstr>
 次のように、サイズ型付きリストのペアを弄くる関数 `pair` と、
 そのフラグを型付けしてみましょう。
 
-```OCaml
+{% highlight OCaml %}
 type flag =
   | Through
   | Swap
@@ -221,12 +221,12 @@ let pair flag (xs, ys) = match flag with
   | Swap -> (ys, xs)       (* 左右の要素を入れ替える *)
   | Dup_left -> (xs, xs)   (* 左の要素を複製する *)
   | Dup_right -> (ys, ys)  (* 右の要素を複製する *)
-```
+{% endhighlight %}
 
 `flag` 型はコンストラクタを 4 つ持っているので、
 以下のように 5 つの幽霊型変数を用意して、型付けします。
 
-```OCaml
+{% highlight OCaml %}
 module M4 : sig
   ... (* M1 と同じ *)
 
@@ -259,11 +259,11 @@ end = struct
     | Dup_left -> (xs, xs)
     | Dup_right -> (ys, ys)
 end
-```
+{% endhighlight %}
 
 ちゃんと動くのか、試してみましょう。
 
-```OCaml
+{% highlight OCaml %}
 # open M4;;
 # let xs = cons 1 nil;;
 val xs : (z s, int) sized_list = <abstr>
@@ -271,25 +271,25 @@ val xs : (z s, int) sized_list = <abstr>
 val p : (z s, int) sized_list * (z s s, int) sized_list = (<abstr>, <abstr>)
 # pair through p;;
 - : (z s, int) sized_list * (z s s, int) sized_list = (<abstr>, <abstr>)
-```
+{% endhighlight %}
 
 `through` については、ちゃんと渡したペア `p` と同じ型が返っていることが確認できます。
 `swap` をフラグに渡すと、
 
-```OCaml
+{% highlight OCaml %}
 # pair swap p;;
 - : (z s s, int) sized_list * (z s, int) sized_list = (<abstr>, <abstr>)
-```
+{% endhighlight %}
 
 というように、左右のサイズ型 (`z s` と `z s s`) が入れ替わっていることがわかります。
 `dup_left` と `dup_right` についても、ちゃんと動作していることが確認できます。
 
-```OCaml
+{% highlight OCaml %}
 # pair dup_left p;;
 - : (z s, int) sized_list * (z s, int) sized_list = (<abstr>, <abstr>)
 # pair dup_right p;;
 - : (z s s, int) sized_list * (z s s, int) sized_list = (<abstr>, <abstr>)
-```
+{% endhighlight %}
 
 こんな感じで、幽霊型を使うことにより、引数のフラグの値に依存して、
 戻り値型が変化するような、捻くれた関数を作ることが出来ます。
@@ -299,13 +299,13 @@ val p : (z s, int) sized_list * (z s s, int) sized_list = (<abstr>, <abstr>)
 OCaml のオプション引数っていうのは、例えば、次の関数の引数 `x` のように、
 省略可能な引数のことです。
 
-```OCaml
+{% highlight OCaml %}
 (* foo : ?x:int -> unit -> int *)
 let foo ?(x = 123) () = x
 
 let y = foo ~x:42 () (* y is 42 *)
 let z = foo ()       (* z is 123 *)
-```
+{% endhighlight %}
 
 `~x:42` のように明示的に値をしていることもできるけど、
 デフォルトのままでいいやってときは、
@@ -315,15 +315,15 @@ OCaml 以外でも、似たような機能を備えている言語はたくさ�
 でも、OCaml だと、オプション引数と型レベルトリックはあまり相性がよくありません。
 例えば、`branch` 関数の第一引数をオプションにした関数
 
-```OCaml
+{% highlight OCaml %}
 let branch ?(b = tru) xs ys = if b then xs else ys
-```
+{% endhighlight %}
 
 に型を付けるとき、
 
-```OCaml
+{% highlight OCaml %}
 val branch ?b:('k, 'm, 'n) dbool -> ('m, 'a) sized_list -> ('n, 'a) sized_list -> ('k, 'a) sized_list
-```
+{% endhighlight %}
 
 とするのは、間違いです。`b` を省略した時に、`tru` の型の情報が反映されず、
 `branch` 関数の戻り値が `forall 'k. ('k, 'a) sized_list`（任意のサイズに解釈できるリスト）となってしまうので、

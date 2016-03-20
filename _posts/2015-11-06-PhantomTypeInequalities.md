@@ -43,9 +43,9 @@ Electr. Notes Theor. Comput. Sci, 174(7), pp. 79-104, 2007.
 `z s s bindex` という型を与えることは可能です。
 この型を使って、添字アクセス関数に
 
-```OCaml
+{% highlight OCaml %}
 val bget : ('a, 'n) sarray -> 'n bindex -> 'a
-```
+{% endhighlight %}
 
 という型付けを行えば、安全性をコンパイル時に検査できます（0 以上かつ `'n` 未満を満たさない値に
 `'n bindex` の型は付かないので、型エラー）。
@@ -60,30 +60,30 @@ val bget : ('a, 'n) sarray -> 'n bindex -> 'a
 
 という型を導入して、
 
-```OCaml
+{% highlight OCaml %}
 val bsucc : 'n bindex -> 'n bindexL
-```
+{% endhighlight %}
 
 という型付けを行えば、ひとまず型と値が矛盾することはなくなります。
 ちなみに、後者 `bsucc` に対して、ゼロには
 
-```OCaml
+{% highlight OCaml %}
 val bzero : 'n bindexL
-```
+{% endhighlight %}
 
 という型を付けます。
 空の配列に対して、ゼロは有効な添字ではないため、`'n bindex` の上限に関する条件を満たさないためです。
 しかし、これでは、`bzero` を `bsucc` に渡したり、`bget` に渡したりできないので、
 `'n bindexL` 型の値を `'n bindex` に変換する関数
 
-```OCaml
+{% highlight OCaml %}
 val index_cmpL : ('a, 'n) sarray -> 'n bindexL ->
                  (unit -> 'b) ->      (* i >= Array.length arr *)
                  ('n bindex -> 'b) -> (* i < Array.length arr *)
                  'b
 
 let index_cmpL arr i f g = if i >= Array.length arr then f () else g i
-```
+{% endhighlight %}
 
 を用意します。
 `index_cmpL arr i f g` は `i` が `'n bindex` の上限の条件を満すかどうか検査し、
@@ -96,18 +96,18 @@ else 節 `g : 'n bindex -> 'a`（条件を満たす場合）で異なる型を�
 
 ここまでのことを踏まえると、線形探索は以下のように書けそうです。
 
-```OCaml
+{% highlight OCaml %}
 let find arr x = (* mem : ('a, 'n) sarray -> 'a -> 'a option *)
   let rec aux i = (* aux : 'n bindexL -> 'a option *)
     index_cmpL arr i (fun () -> None)
       (fun i -> if bget arr i = x then Some x else aux (bsucc i))
   in
   aux bzero
-```
+{% endhighlight %}
 
 ## 実装
 
-```OCaml
+{% highlight OCaml %}
 module M1 : sig
   type z
   type 'n s
@@ -143,22 +143,22 @@ end = struct
   let bsucc n = n + 1
   let index_cmpL arr i f g = if i >= Array.length arr then f () else g i
 end
-```
+{% endhighlight %}
 
 以下のように `zero` と `succ` でサイズ型付き自然数を作り、
 それを `init` 関数に渡して、配列を作ります。
 
-```OCaml
+{% highlight OCaml %}
 # open M1;;
 # let five = succ (succ (succ (succ (succ zero))));;
 val five : z s s s s s snat = <abstr>
 # let arr = init five (fun i -> i * 2);;
 val arr : (int, z s s s s s) sarray = <abstr>
-```
+{% endhighlight %}
 
 前節で定義した、静的境界検査付きの `mem` もきちんと動作します。
 
-```OCaml
+{% highlight OCaml %}
 # let find arr x = (* mem : ('a, 'n) sarray -> 'a -> 'a option *)
     let rec aux i = (* aux : 'n bindexL -> 'a option *)
       index_cmpL arr i (fun () -> None)
@@ -170,7 +170,7 @@ val mem : ('a, 'b) sarray -> 'a -> bool = <fun>
 - : bool = Some 4
 # find arr 3;;
 - : bool = None
-```
+{% endhighlight %}
 
 ## ここまでのまとめ
 
@@ -186,14 +186,14 @@ val mem : ('a, 'b) sarray -> 'a -> bool = <fun>
 `index_cmpL` が添字の実行時検査をしているのは良いの？」という疑問に答えます。
 まずは、今回の線形探索のコードをもう一度見てみると、
 
-```OCaml
+{% highlight OCaml %}
 let find arr x = (* find : ('a, 'n) sarray -> 'a -> 'a option *)
   let rec aux i = (* aux : 'n bindexL -> 'a option *)
     index_cmpL arr i (fun () -> None)
       (fun i -> if bget arr i = x then Some x else aux (bsucc i))
   in
   aux bzero
-```
+{% endhighlight %}
 
 `index_cmpL` の実行時検査は「境界条件」というより、むしろ「再帰の終了条件」としての役割を担っています。
 前者は（本来は必ず）満たされるべきなのに対して、後者は再帰の途中で満たされたり満たされなくなったりします。
@@ -216,9 +216,9 @@ let find arr x = (* find : ('a, 'n) sarray -> 'a -> 'a option *)
 まず、二分探索では 2 つの添字 `i`, `j` を受け取り、
 その中央の添字 `(i + j) / 2` を得る関数 `bmiddle` が必要になりますが、
 
-```OCaml
+{% highlight OCaml %}
 val bmiddle : 'n bindex -> 'n bindex -> 'n bindex
-```
+{% endhighlight %}
 
 と型付けできます（引数が上限下限を満たすなら、戻り値も満たす）。
 
@@ -227,37 +227,37 @@ val bmiddle : 'n bindex -> 'n bindex -> 'n bindex
 そこで、`bsucc` と同じような手順で解決します。
 「上限（`'n` 未満）だけ満たす整数の型 `'n bindexH`」 を導入して、
 
-```OCaml
+{% highlight OCaml %}
 type 'n bindexH (* = int *)
 val bpred : 'n bindex -> 'n bindexH
-```
+{% endhighlight %}
 
 と型付けできます。また、配列の最後の添字は
 
-```OCaml
+{% highlight OCaml %}
 val blast : ('a, 'n) sarray -> 'n bindexH
 let blast arr = Array.length arr - 1
-```
+{% endhighlight %}
 
 で取得します（空の配列では、-1 を返すため、下限を満たすとは限らない）。
 
 最後に、`index_cmp` は
 
-```OCaml
+{% highlight OCaml %}
 val index_cmp : 'n bindexL -> 'n bindexH ->
                 (unit -> 'b) ->                   (* i > j *)
                 ('n bindex -> 'n bindex -> 'b) -> (* i <= j *)
                 'b
 
 let index_cmp i j f g = if i > j then f () else g i j
-```
+{% endhighlight %}
 
 とします。
 今までの `index_cmpL arr i f g` は `index_cmpL i (blast arr) f g` で代用できます。
 
 ここまで定義した関数を使うと、二分探索は以下のようになります。
 
-```OCaml
+{% highlight OCaml %}
 let bsearch arr x = (* bsearch : ('a, 'n) sarray -> 'a -> 'a option *)
   let rec look lo hi = (* look : 'n bindexL -> 'n bindexH -> 'a option *)
     index_cmp lo hi (fun () -> None)
@@ -269,11 +269,11 @@ let bsearch arr x = (* bsearch : ('a, 'n) sarray -> 'a -> 'a option *)
         else Some y)
   in
   look bzero (blast arr)
-```
+{% endhighlight %}
 
 ## 実装
 
-```OCaml
+{% highlight OCaml %}
 module M2 : sig
   type z
   type 'n s
@@ -317,21 +317,21 @@ end = struct
   let bmiddle i j = (i + j) / 2
   let index_cmp i j f g = if i > j then f () else g i j
 end
-```
+{% endhighlight %}
 
 配列の作り方は、線形探索のコードと同じです。
 
-```OCaml
+{% highlight OCaml %}
 # open M2;;
 # let five = succ (succ (succ (succ (succ zero))));;
 val five : z s s s s s snat = <abstr>
 # let arr = init five (fun i -> i * 2);;
 val arr : (int, z s s s s s) sarray = <abstr>
-```
+{% endhighlight %}
 
 `bsearch` もちゃんと動きます。
 
-```OCaml
+{% highlight OCaml %}
 # let bsearch arr x =
     let rec look lo hi =
       index_cmp lo hi (fun () -> None)
@@ -349,4 +349,4 @@ val bsearch : ('a, 'b) sarray -> 'a -> 'a option = <fun>
 - : bool = Some 4
 # bsearch arr 3;;
 - : bool = None
-```
+{% endhighlight %}

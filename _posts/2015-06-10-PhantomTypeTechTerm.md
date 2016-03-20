@@ -14,11 +14,11 @@ categories: 型レベルプログラミング
 
 [6/9 の記事]({{ site.baseurl }}/2015/06/09/PhantomTypeIntro)で定義した型を思い出してみます。
 
-```OCaml
+{% highlight OCaml %}
 type 'a channel = IC of in_channel | OC of out_channel
 type input
 type output
-```
+{% endhighlight %}
 
 `'a channel` の `'a` のように「型定義の右辺に現れない型変数」を「幽霊型変数」と呼ぶことは、
 間違いないです。しかし、「幽霊型」が何を指すのかについては、以下のような派閥があります。

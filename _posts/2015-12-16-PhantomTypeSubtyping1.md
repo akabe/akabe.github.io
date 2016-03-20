@@ -48,7 +48,7 @@ Standard ML の言語機能だけで部分型付けを実現する方法があ�
 論文で提案されている方法で、前回と同様の `int <: float` という部分型関係を導入すると、
 次のようなコードになります。
 
-```OCaml
+{% highlight OCaml %}
 module M : sig
   type 'a z (* 幽霊型 *)
   type 'a t (* 'a は幽霊型変数 *)
@@ -70,7 +70,7 @@ end = struct
     | Int x, Int y -> Int (x mod y)
     | _ -> assert false (* 幽霊型が浮動小数点数は渡されないことを保証する *)
 end
-```
+{% endhighlight %}
 
 - `unit z t` は `int` に対応している。
 - `unit t` は `float` に対応している。

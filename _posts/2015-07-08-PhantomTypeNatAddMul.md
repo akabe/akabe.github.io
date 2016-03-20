@@ -144,11 +144,11 @@ OCaml 初心者に怖がられがちなモジュール回りの用語につい�
 今回は、型レベルで自然数の演算を実現することが目的です。
 モジュールには
 
-```OCaml
+{% highlight OCaml %}
 struct
   type t = ...
 end
-```
+{% endhighlight %}
 
 として、型を含めることができるので、ファンクターを使えば「型を受け取って型を返す関数」が書けます。
 チャーチ数も関数なので、ファンクターで実装すれば、先ほど紹介した加算・乗算を型レベルで実現できそうですね。
@@ -159,29 +159,29 @@ end
 その「型」であるシグネチャは `sig ... end` と書きます。
 シグネチャには名前を付けることができます。
 
-```OCaml
+{% highlight OCaml %}
 module type TYP = sig type t end
-```
+{% endhighlight %}
 
 シグネチャ `TYP` は「型 `t` を持つモジュール」の型です。
 「型を受け取って型を返す関数」つまり「`TYP` シグネチャを持つモジュールを受け取り、
 `TYP` シグネチャを持つモジュールを返すファンクター」は
 
-```OCaml
+{% highlight OCaml %}
 module type SUC = functor (X : TYP) -> TYP
-```
+{% endhighlight %}
 
 というシグネチャを持ちます（しつこいですが、`SUC` はファンクターのシグネチャです）。
 文法の見た目がゴツいですが、`TYP -> TYP` のような「型（シグネチャ）」を表しています。
 
 チャーチ数をファンクターで表すと
 
-```OCaml
+{% highlight OCaml %}
 module C0 = functor (S : SUC) (Z : TYP) -> Z           (* c0 = λs. λz. z *)
 module C1 = functor (S : SUC) (Z : TYP) -> S(Z)        (* c1 = λs. λz. s z *)
 module C2 = functor (S : SUC) (Z : TYP) -> S(S(Z))     (* c2 = λs. λz. s (s z) *)
 module C3 = functor (S : SUC) (Z : TYP) -> S(S(S(Z)))  (* c3 = λs. λz. s (s (s z)) *)
-```
+{% endhighlight %}
 
 となります。ファンクターの引数には型（シグネチャ）を明示する必要があることと、
 ファンクターの適用は `S Z` ではなく `S(Z)` と書くことに注意して下さい。
@@ -191,13 +191,13 @@ module C3 = functor (S : SUC) (Z : TYP) -> S(S(S(Z)))  (* c3 = λs. λz. s (s (s
 ファンクターで表現したチャーチ数 `C3` に、ゼロに対応するモジュール `struct type t = z end` と、
 +1 に対応するファンクター `functor (X : TYP) -> struct type t = X.t s end` を渡してみます。
 
-```OCaml
+{% highlight OCaml %}
 # type z     (* ゼロに対応する幽霊型 *)
 # type 'n s  (* +1 に対応する幽霊型 *)
 # module M = C3(functor (X : TYP) -> struct type t = X.t s end)
                (struct type t = z end);;
 module M : sig type t = z s s s end
-```
+{% endhighlight %}
 
 ちゃんと、`3` に対応する型 `z s s s` が返ってきました。
 
@@ -206,25 +206,25 @@ module M : sig type t = z s s s end
 先程のチャーチ数は、`SUC -> TYP -> TYP` のような型を持つはずです。
 シグネチャで表すと、
 
-```OCaml
+{% highlight OCaml %}
 module type NAT = functor (S : SUC) -> functor (Z : TYP) -> TYP
-```
+{% endhighlight %}
 
 です。ラムダ式での `succ` の定義を真似て、ファンクター `Succ` を書くと
 
-```OCaml
+{% highlight OCaml %}
 (* succ = λn. λs. λz. s (n s z) *)
 module Succ = functor (N : NAT) (S : SUC) (Z : TYP) -> S(N(S)(Z))
-```
+{% endhighlight %}
 
 となります。実際に実行してみると、
 
-```OCaml
+{% highlight OCaml %}
 # module C4 = Succ(C3);;
 # module M' = C4(functor (X : TYP) -> struct type t = X.t s end)
                 (struct type t = z end);;
 module M' : sig type t = z s s s s end
-```
+{% endhighlight %}
 
 ちゃんと、`4` に対応する型 `z s s s s` が返ってきたので、成功です。
 このあたりから、だんだん騙されているような気になってきます。
@@ -234,19 +234,19 @@ module M' : sig type t = z s s s s end
 
 同様に加算も実装してみます。
 
-```OCaml
+{% highlight OCaml %}
 (* add = λm. λn. λs. λz. m s (n s z) *)
 module Add = functor (M : NAT) (N : NAT) (S : SUC) (Z : TYP) -> M(S)(N(S)(Z))
-```
+{% endhighlight %}
 
 試してみると、これも上手くいくことが確認できます。
 
-```OCaml
+{% highlight OCaml %}
 # module C7 = Add(C4)(C3);;
 # module M'' = C7(functor (X : TYP) -> struct type t = X.t s end)
                  (struct type t = z end);;
 module M'' : sig type t = z s s s s s s s end
-```
+{% endhighlight %}
 
 ここまで来ると、ちょっと感動的です。
 動いてるのが、奇跡のような気がしてきます。
@@ -255,19 +255,19 @@ module M'' : sig type t = z s s s s s s s end
 
 ドキドキしながら、乗算を実装します。
 
-```OCaml
+{% highlight OCaml %}
 (* mul = λm. λn. λs. λz. m (n s) z *)
 module Mul = functor (M : NAT) (N : NAT) (S : SUC) (Z : TYP) -> M(N(S))(Z)
-```
+{% endhighlight %}
 
 試してみると、`s` の個数を数えるのが大変ですが、ちゃんと 12 個あります。
 
-```OCaml
+{% highlight OCaml %}
 # module C12 = Mul(C4)(C3);;
 # module M''' = C12(functor (X : TYP) -> struct type t = X.t s end)
                    (struct type t = z end);;
 module M''' : sig type t = z s s s s s s s s s s s s end
-```
+{% endhighlight %}
 
 ここまで上手くいくと、気持ち悪いですね。
 私も初めてこれを実装したときは、夢でも見ている気分でした。
@@ -276,7 +276,7 @@ module M''' : sig type t = z s s s s s s s s s s s s end
 
 ここまでに紹介した実装全体を載せておきます。
 
-```OCaml
+{% highlight OCaml %}
 module type TYP = sig type t end
 module type SUC = functor (X : TYP) -> TYP
 module type NAT = functor (S : SUC) -> functor (Z : TYP) -> TYP
@@ -313,7 +313,7 @@ module M'' = C7(functor (X : TYP) -> struct type t = X.t s end)(struct type t = 
 (* Test of Mul *)
 module C12 = Mul(C4)(C3)
 module M''' = C12(functor (X : TYP) -> struct type t = X.t s end)(struct type t = z end)
-```
+{% endhighlight %}
 
 # 参考書籍
 

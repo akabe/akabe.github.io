@@ -30,7 +30,7 @@ Haskell や Scala などでも似たようなことができます。
 以下に、コード例だけ載せておきます（この記事の内容と要素の型に関する多相性は無関係なので、
 簡単のために `int` に固定しています）。
 
-```OCaml
+{% highlight OCaml %}
 module SizedList : sig
   type 'n sized_list (* 'n は幽霊型変数 *)
   type z             (* ゼロに対応する幽霊型 *)
@@ -50,7 +50,7 @@ end = struct
   let hd = List.hd
   let tl = List.tl
 end
-```
+{% endhighlight %}
 
 # ファイルから読み込んだリストの長さをどうするか？
 
@@ -69,11 +69,11 @@ end
 まず、異なるファイルから読み込んだリストの各要素を加算
 `add : 'n sized_list -> 'n sized_list -> 'n sized_list` することを考えてみます．
 
-```OCaml
+{% highlight OCaml %}
 let (x : ?1 sized_list) = load "file" in
 let (y : ?2 sized_list) = load "another_file" in
 add x y (* 型エラーを起こすべき! *)
-```
+{% endhighlight %}
 
 最初の `load` の戻り値型を `?1 sized_list`、2 番目の `load` の戻り値型を `?2 sized_list` とします。
 当然、`x` と `y` は同じ次元とは限らないので、`map f x y` は型エラーを起こすべきです。
@@ -81,11 +81,11 @@ add x y (* 型エラーを起こすべき! *)
 
 では、同じファイルから読み込んだ場合はどうでしょうか？
 
-```OCaml
+{% highlight OCaml %}
 let (x : ?1 sized_list) = load "file" in
 let (y : ?2 sized_list) = load "file" in
 add x y (* 型エラーを起こすべき! *)
-```
+{% endhighlight %}
 
 実は、これも型エラーを起こすべきです。
 ファイルの読み込み中に内容が書き換えられる可能性があるので、`x` と `y` は同じ長さとは限りません。
@@ -108,30 +108,30 @@ ML 系の言語で存在型を導入する一番ポピュラーな方法は、
 **モジュール** (module) と **シグニチャ** (signature) を使うことです。
 例えば、`exists 'a. 'a -> 'a`（ある型 `'a` について `'a -> 'a`）という型は
 
-```OCaml
+{% highlight OCaml %}
 module type S = sig
   type a
   val f : a -> a
 end
-```
+{% endhighlight %}
 
 というシグニチャに対応するので、
 
-```OCaml
+{% highlight OCaml %}
 module M1 : S = struct
   type a = int
   let f = succ (* f : int -> int *)
 end
-```
+{% endhighlight %}
 
 とか、
 
-```OCaml
+{% highlight OCaml %}
 module M2 : S = struct
   type a = bool
   let f = (not) (* f : bool -> bool *)
 end
-```
+{% endhighlight %}
 
 のように、「`a -> a` の型を持つけど、ある特定の型 `a` にしか使えない関数」を表すことができます。
 ただし、シグニチャで隠蔽しているので、型 `a` の実装が外から見えず、
@@ -148,7 +148,7 @@ end
 先ほど紹介したモジュールの話を参考にすると、
 存在型 `exists n. n sized_list` とその型を持つ値は
 
-```OCaml
+{% highlight OCaml %}
 module type S = sig
   type n
   val x : n sized_list
@@ -158,30 +158,30 @@ module M : S = struct
   type n
   let x = load "file"
 end
-```
+{% endhighlight %}
 
 のようになります。（リストにアクセスするときは、`M.x` とする）。
 これで、ちゃんと存在型を表せています。
 
-```OCaml
+{% highlight OCaml %}
 module N : S = struct
   type n
   let x = load "file"
 end
 
 let z = add M.x N.x (* 型エラー (M.n sized_list <> N.n sized_list) *)
-```
+{% endhighlight %}
 
 でも、これだと、毎回 `load` の戻り値をモジュールで包んでいるだけなので、
 
-```OCaml
+{% highlight OCaml %}
 module N : S with type n = M.n = struct
   type n = M.n
   let x = load "file"
 end
 
 let z = add M.x N.x (* 間違って型検査が通っちゃう！ *)
-```
+{% endhighlight %}
 
 とかすると、型安全性が崩れます。
 
@@ -189,7 +189,7 @@ let z = add M.x N.x (* 間違って型検査が通っちゃう！ *)
 
 次のように、モジュールを作る関数である**ファンクター** (functor) を使うと上手くいきます。
 
-```OCaml
+{% highlight OCaml %}
 module F (X : sig val fname : string end) : S = struct
   type n
   let x = load X.fname
@@ -198,18 +198,18 @@ end
 module M = F(struct let fname = "file" end)
 module N = F(struct let fname = "file" end)
 let z = add M.x N.x (* 型エラー (M.n sized_list <> N.n sized_list) *)
-```
+{% endhighlight %}
 
 ただし、OCaml のファンクターは**適用的ファンクター** (applicative functor) と言って、
 引数が同じ（正確には同一の名前に束縛されている）モジュールの場合、
 返り値を同一のモジュールと見なします。つまり、
 
-```OCaml
+{% highlight OCaml %}
 module X = struct let fname = "file" end (* 一旦、引数を束縛 *)
 module M = F(X)
 module N = F(X)
 let z = add M.x N.x (* 間違って型検査が通っちゃう！ *)
-```
+{% endhighlight %}
 
 というように、`M` = `N` と解釈されてしまいます。
 単純に、常に `F(struct ... end)` の形で呼びだせば良いだけですが、
@@ -218,7 +218,7 @@ OCaml は呼ばれる度に異なるモジュールを返す**生成的ファン
 生成的ファンクターは次のように、ファンクターの第一引数に `()` を書くだけです
 （ファンクターの定義と呼び出しの両方で必要）。
 
-```OCaml
+{% highlight OCaml %}
 module F () (X : sig val fname : string end) : S = struct
   type n
   let x = load X.fname
@@ -228,7 +228,7 @@ module X = struct let fname = "file" end (* 一旦、引数を束縛 *)
 module M = F()(X)
 module N = F()(X)
 let z = add M.x N.x (* 型エラー (M.n sized_list <> N.n sized_list) *)
-```
+{% endhighlight %}
 
 ちなみに、SML のファンクターは全て生成的なので、使い分ける必要はありません。
 
@@ -241,7 +241,7 @@ OCaml 3.12 から**第一級モジュール** (first-class module) がサポー�
 関数内でモジュールをグリグリ弄くり回すことができます。
 アイディアは、基本的には生成的ファンクターと似たようなものです。
 
-```OCaml
+{% highlight OCaml %}
 let f fname = (* f : string -> (module S) *)
   (module struct
     type n
@@ -253,7 +253,7 @@ let () =
   let module N = (val f "file" : S) in
   let z = add M.x N.x in (* 型エラー (M.n sized_list <> N.n sized_list) *)
   ...
-```
+{% endhighlight %}
 
 第一級モジュールは OCaml に後付けで搭載された機能なので、
 文法が**かなりキモい**という欠点がありますが、
@@ -266,9 +266,9 @@ OCaml で書いたサンプルコード: https://gist.github.com/akabe/927d913dd
 **一般化代数的データ型** (generalized algebraic data type; GADT) という機能を使っても、
 存在型を作ることができます。例えば、以下のような型 `pkg` を使います。
 
-```OCaml
+{% highlight OCaml %}
 type pkg = C : 'n sized_list -> pkg
-```
+{% endhighlight %}
 
 コンストラクタ `C` の型が特徴的で、「任意の型 `'n` について `'n sized_list` を受け取り、
 `pkg` を返す」と言っています。引数の型変数の情報を捨ててしまうため、
@@ -277,7 +277,7 @@ type pkg = C : 'n sized_list -> pkg
 `pkg` 型からリストの長さの情報を復元できず、
 `exists n. n sized_list` のような型が（自動的に）与えられます。
 
-```OCaml
+{% highlight OCaml %}
 let f fname = C (load fname) (* f : string -> pkg *)
 
 let () =
@@ -290,7 +290,7 @@ let () =
 ちなみに、OCaml の実装では、存在型を `n#3` のような名前で型エラーメッセージに表示するため、
 以下のような大変難解なメッセージになり、とても楽しいです。
 
-```
+{% endhighlight %}
 Error: This expression has type n#3 t but an expression was expected of type
          n#2 t
        Type n#3 is not compatible with type n#2
@@ -310,16 +310,16 @@ exists X. T  =  forall Y. (forall X. T -> Y) -> Y
 第一級多相型は OCaml だと、第一級モジュールやレコードを使って実現できますが、
 今回はレコードを使ってみましょう。
 
-```OCaml
+{% highlight OCaml %}
 type 'y t = { k : 'x. 'x sized_type -> 'y } (* = forall X. T -> Y *)
-```
+{% endhighlight %}
 
 レコード宣言時において、フィールドの型の先頭に `'x. ` と書くと
 `forall 'x. ` の意味になります。
 この方法だと、プログラムに CPS 変換を行う必要があり、結果として、
 以下のようなコードになります。
 
-```OCaml
+{% highlight OCaml %}
 let f fname {k} = k (load fname) (* f : string -> 'y t -> 'y *)
 
 let () =
@@ -331,7 +331,7 @@ let () =
     f "file" { k = fun y -> k1 x y } (* 型エラー *)
   in
   f "file" { k = k2 }
-```
+{% endhighlight %}
 
 この場合、（`k1` 自体が型エラーでない場合）`fun y -> k1 x y` の型が
 `'n sized_type -> ...` になりますが、型変数 `'n` は `k2` の所で束縛されるため、

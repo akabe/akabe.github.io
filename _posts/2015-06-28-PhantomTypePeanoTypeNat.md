@@ -16,17 +16,17 @@ OCaml を例に紹介しますが、原理的には Haskell、Scala、Java、C++
 
 リストと言えば、`hd` はお馴染みの関数ですよね。
 
-```OCaml
+{% highlight OCaml %}
 val hd : 'a list -> 'a (* リストの先頭要素を返す *)
-```
+{% endhighlight %}
 
 知っての通り、`hd` 関数は空リスト `[]` に対して、適用すると**実行時エラー**（例外）を発生します。
 
-```OCaml
+{% highlight OCaml %}
 # open List;;
 # hd [];;
 Exception: Failure "hd".
-```
+{% endhighlight %}
 
 空リストに先頭要素は存在しないので、当たり前です。
 でも、折角なので、この関数を**型安全**にしたいと思いませんか？思いますよね？
@@ -36,7 +36,7 @@ Exception: Failure "hd".
 `hd` 関数を型安全にするには、「空リスト」と「空ではないリスト（非空リスト）」を型で区別することを考えます。
 これは簡単で、[6/9 の記事]({{ site.baseurl }}/2015/06/PhantomTypeIntro)の方法と同じようにやれば、出来ます。
 
-```OCaml
+{% highlight OCaml %}
 module NonEmptyList :
 sig
   type ('a, 'b) t (* 'b は幽霊型変数 *)
@@ -55,7 +55,7 @@ end = struct
   let cons x l = x :: l
   let hd = List.hd
 end
-```
+{% endhighlight %}
 
 `('a, empty) t` は「要素の型が `'a` であるような**空リスト**の型」、
 `('a, non_empty) t` は「要素の型が `'a` であるような**非空リスト**の型」です。
@@ -64,25 +64,25 @@ end
 `cons` して得られるリストは必ず非空です。
 ですので、`cons` の戻り値の型は `('a, non_empty) t` という型になっています。
 
-```OCaml
+{% highlight OCaml %}
 # open NonEmptyList;;
 # nil;; (* 空リスト *)
 - : ('a, empty) t = <abstr>
 # cons 42 nil;; (* 非空リスト *)
 - : (int, non_empty) t = <abstr>
-```
+{% endhighlight %}
 
 ちゃんと、空リストと非空リストが型の上で区別されています。
 では、`hd` 関数が型安全になったか、確認してみます。
 
-```OCaml
+{% highlight OCaml %}
 # hd (cons 42 nil);; (* 非空リストなので、処理は成功する *)
 - : int = 42
 # hd nil;; (* 空リストなので、型エラーを起こす（実行時エラーでないことに注意） *)
 Error: This expression has type ('a, empty) t
        but an expression was expected of type ('a, non_empty) t
        Type empty is not compatible with type non_empty
-```
+{% endhighlight %}
 
 やったね！ `hd` 関数が型安全になった！
 
@@ -91,9 +91,9 @@ Error: This expression has type ('a, empty) t
 これで、ハッピーエンド、と言いたいところですが、世の中そんなに甘くありません。
 `hd` の対になる関数 `tl` について考えてみます。
 
-```OCaml
+{% highlight OCaml %}
 val tl : 'a list -> 'a list
-```
+{% endhighlight %}
 
 この関数は受け取ったリストから先頭要素を取り除いたリストを返すので、
 引数のリストの長さを `n` とすると、戻り値のリストの長さは `n-1` になります。
@@ -139,34 +139,34 @@ val tl : 'a list -> 'a list
 では、この自然数の定義を**型**を使ってエンコードしてみます。
 まず、ゼロと後者に対応する型を用意します。
 
-```OCaml
+{% highlight OCaml %}
 type z     (* ゼロに対応する幽霊型 *)
 type 'n s  (* 'n の後者 ('n + 1) に対応する幽霊型 *)
-```
+{% endhighlight %}
 
 3 は `z s s s`、5 は `z s s s s s` のように表現されます。
 そして、`nil` と `cons` には次のような型を割り当てます。
 
-```OCaml
+{% highlight OCaml %}
 val nil  : ('a, z) t                        (* 長さゼロのリスト *)
 val cons : 'a -> ('a, 'n) t -> ('a, 'n s) t (* 長さ 'n のリストを受け取り、'n s の長さのリストを返す *)
-```
+{% endhighlight %}
 
 先程はリスト型 `('a, 'b) t` の型変数 `'b` には、`empty`/`non_empty` を代入していましたが、
 今回は型レベル自然数を入れています。このようにすると、`cons` する度に、`s` が増えていくので、
 
-```OCaml
+{% highlight OCaml %}
 # cons 3 (cons 2 (cons 1 nil));; (* 長さ 3 のリスト *)
 - : (int, z s s s) t = <abstr>
-```
+{% endhighlight %}
 
 のように、長さに対応した型が付くことになります。
 `hd` と `tl` は長さが1以上、つまり `('a, 'n s) t` 型のリストを受け取るので、
 
-```OCaml
+{% highlight OCaml %}
 val hd : ('a, 'n s) t -> 'a
 val tl : ('a, 'n s) t -> ('a, 'n) t
-```
+{% endhighlight %}
 
 という型がつきます。
 `tl` については「長さ `n+1` のリストを受け取り、長さ `n` のリストを返す」ことを型で表しています。
@@ -175,7 +175,7 @@ val tl : ('a, 'n s) t -> ('a, 'n) t
 
 今までのアイディアを基に、サイズ型付きリストを実装すると、次のようになります。
 
-```OCaml
+{% highlight OCaml %}
 module PSizedList : sig
   type ('a, 'n) t (* 'n は幽霊型変数 *)
   type z          (* ゼロに対応する幽霊型 *)
@@ -195,11 +195,11 @@ end = struct
   let hd = List.hd
   let tl = List.tl
 end
-```
+{% endhighlight %}
 
 では、本当に型レベル自然数が実現されているか、`tl` が型安全になっているか確認してみます。
 
-```OCaml
+{% highlight OCaml %}
 # open PSizedList;;
 # nil;;
 - : ('a, z) t = <abstr>
@@ -209,12 +209,12 @@ val x : (int, z s) t = <abstr>
 val y : (int, z s s) t = <abstr>
 # let z = cons 3 y;;
 val z : (int, z s s s) t = <abstr>
-```
+{% endhighlight %}
 
 ちゃんと、`cons` する度に `s` が増えているので、型レベル自然数が正しく実装されていることがわかります。
 では、`tl` はちゃんと型安全になったでしょうか？
 
-```OCaml
+{% highlight OCaml %}
 # tl z;;  (* 長さ 2 のリストが返ってくる *)
 - : (int, z s s) t = <abstr>
 # tl (tl z);;  (* 長さ 1 のリストが返ってくる *)
@@ -225,7 +225,7 @@ val z : (int, z s s s) t = <abstr>
 Error: This expression has type (int, z) t
        but an expression was expected of type (int, 'a s) t
        Type z is not compatible with type 'a s
-```
+{% endhighlight %}
 
 ちゃんと型安全になっていますね！
 型レベルプログラミングに馴染みのない人は、恐らく、この辺りで騙されたような気分になってくると思います。

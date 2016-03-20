@@ -25,36 +25,36 @@ categories: 型レベルプログラミング
 
 普通の `int` の代わりに、`'n t` という型を用意し、幽霊型変数 `'n` に型レベル自然数を入れることにします。
 
-```OCaml
+{% highlight OCaml %}
 type 'n t = int    (* 'n は幽霊型変数 (型定義の右辺に現れない) *)
-```
+{% endhighlight %}
 
 `'n` に入れる型は、ゼロに対応する幽霊型 `z` と `+1` に対応する幽霊型 `s` を使って表現します。
 
-```OCaml
+{% highlight OCaml %}
 type z       (* ゼロに対応する幽霊型 *)
 type 'n s    (* +1 に対応する幽霊型 *)
-```
+{% endhighlight %}
 
 自然数 0 なら型 `z`、1 なら `z s`、2 なら `z s s`、3 なら `z s s s` ...
 というように、「`z` の後ろに続く `s` の個数」で自然数を**型レベル**で表現します。
 そうすると、自然数 0 には `z t` という型が付くべきなので、
 
-```OCaml
+{% highlight OCaml %}
 val zero : z t
-```
+{% endhighlight %}
 
 とします。また、`+1` をする関数 `succ` (successor) は `'n t` を受け取って、`'n s t` (= `'n + 1`) を返すので、
 
-```OCaml
+{% highlight OCaml %}
 val succ : 'n t -> 'n s t
-```
+{% endhighlight %}
 
 という型を持つはずです。同様に、`-1` をする関数 `pred` (predecessor) は
 
-```OCaml
+{% highlight OCaml %}
 val pred : 'n s t -> 'n t
-```
+{% endhighlight %}
 
 という型を持ちます。
 
@@ -64,7 +64,7 @@ val pred : 'n s t -> 'n t
 モジュールを使っているのは、単純に `'n t` = `int` であることを型検査器から隠すためです。
 隠さないと、せっかくの型レベル自然数が型検査器に無視されて、使い物にならなくなっていまいます。
 
-```OCaml
+{% highlight OCaml %}
 module PNat : sig
   type 'n t = private int (* 型定義右辺は書かなくても良い *)
   type z    (* ゼロに対応する幽霊型 *)
@@ -82,14 +82,14 @@ end = struct
   let succ n = n + 1
   let pred n = n - 1
 end
-```
+{% endhighlight %}
 
 ## 試してみる
 
 本当に型レベル自然数が実現できているか、確認してみます。
 まずは、`succ` を使ってみると、
 
-```OCaml
+{% highlight OCaml %}
 # open PNat;;
 # let one = succ zero;;
 val one : z s t = 1
@@ -97,29 +97,29 @@ val one : z s t = 1
 val two : z s s t = 2
 # let three = succ two;;
 val three : z s s s t = 3
-```
+{% endhighlight %}
 
 `succ` する度に `s` が増えており、ちゃんと、自然数と型が対応しているのがわかります。
 次は `pred` を使ってみましょう。
 
-```OCaml
+{% highlight OCaml %}
 # let two' = pred three;;
 val two' : z s s t = 2
 # let one' = pred two';;
 val one' : z s t = 1
 # let zero' = pred one';;
 val zero' : z t = 0
-```
+{% endhighlight %}
 
 この場合も、`pred` する度に `s` が減っており、上手いこと動作しています。
 ちなみに、`pred` の引数の型は `'n s t` (= `'n + 1`) の形をしていなければならないので、
 `zero : z t` に適用すると、型エラーを起こします。
 
-```OCaml
+{% highlight OCaml %}
 # pred zero';;
 Error: This expression has type z t but an expression was expected of type 'a s t
        Type z is not compatible with type 'a s
-```
+{% endhighlight %}
 
 自然数が負になるのは変ですから、ちゃんと、型安全が担保されていることがわかります。
 今日のお話は、この応用なので、ここまでの内容をしっかり理解して下さい。
@@ -133,9 +133,9 @@ Error: This expression has type z t but an expression was expected of type 'a s 
 せっかくなので、これらの演算も型レベルで表現したいですね。
 そこで今回は、加算をどうやって実現するか考えてみます。直感的には、
 
-```OCaml
+{% highlight OCaml %}
 val add : 'm t -> 'n t -> ('m + 'n) t
-```
+{% endhighlight %}
 
 のような型を与えたいところですが、残念なのことに OCaml では、`+` を型の中に書くことはできません。
 実は OCaml では、この方法では加算の型を書くことができません。
@@ -153,9 +153,9 @@ val add : 'm t -> 'n t -> ('m + 'n) t
 今回の方法でも、`z` と `'n s` を使うのですが、ちょっと発想を転換してみます。
 先程は自然数に型 `'n t` を与えていましたが、今度は差分 `'m - 'n` に対応する型 `('m, 'n) t` を与えることにします。
 
-```OCaml
+{% highlight OCaml %}
 type ('m, 'n) t    (* 'm - 'n に対応 ('m, 'n は幽霊型変数) *)
-```
+{% endhighlight %}
 
 幽霊型変数 `'m`, `'n` には、型レベル自然数が代入されます。例えば、`(z s s, z s) t` は `2 - 1` = `1`、
 `(z s, z s s s) t` は `1 - 3` = `-2` を表します。
@@ -167,35 +167,35 @@ type ('m, 'n) t    (* 'm - 'n に対応 ('m, 'n は幽霊型変数) *)
 ここで、「任意の自然数」の部分を**多相型**で表します。
 すると、以下のように型付けできます。
 
-```OCaml
+{% highlight OCaml %}
 val zero : ('n, 'n) t     (* 任意の 'n について、'n - 'n = 0 *)
-```
+{% endhighlight %}
 
 次に、`succ` の型を考えてみます。今は差分で考えているので、
 `succ` は `m - n` を受け取って、`m - n + 1` = `(m + 1) - n` を返す関数です。
 なので、
 
-```OCaml
+{% highlight OCaml %}
 val succ : ('m, 'n) t -> ('m s, 'n) t    (* 任意の 'm, 'n について、'm-'n を ('m+1)-'n に写す *)
-```
+{% endhighlight %}
 
 と型付けできます。
 `succ zero` の型は `('n s, 'n) t` になり、`succ (succ zero)` の型は `('n s s, 'n) t` になります。
 
 同様に `pred` は `m - n` を `m - n - 1` = `m - (n + 1)` に写すので、
 
-```OCaml
+{% highlight OCaml %}
 val pred : ('m, 'n) t -> ('m, 'n s) t    (* 任意の 'm, 'n について、'm-'n を 'm-('n+1) に写す *)
-```
+{% endhighlight %}
 
 となります。
 
 さて、次は 2 つの整数を加算する関数 `add` の型について考えてみます。
 結論から言うと、`add` については、`m - n` と `n - k` を受け取り、`(m - n) + (n - k)` = `m - k` を返すと考え、
 
-```OCaml
+{% highlight OCaml %}
 val add : ('m, 'n) t -> ('n, 'k) t -> ('m, 'k) t
-```
+{% endhighlight %}
 
 という型を与えます。
 第一引数の型と第二引数の型に同じ型変数 `'n` が含まれているのがポイントです。
@@ -229,9 +229,9 @@ val add : ('m, 'n) t -> ('n, 'k) t -> ('m, 'k) t
 `add` と同様に、減算関数 `sub` についても、
 `m - n` と `k - n` を受け取り、`(m - n) - (k - n)` = `m - k` を返すと考え、
 
-```OCaml
+{% highlight OCaml %}
 val sub : ('m, 'n) t -> ('k, 'n) t -> ('m, 'k) t
-```
+{% endhighlight %}
 
 という型を与えます。動作原理は `add` と全く同じです。
 
@@ -243,7 +243,7 @@ val sub : ('m, 'n) t -> ('k, 'n) t -> ('m, 'k) t
 今までのアイディアをまとめて実装すると、以下のようになります。
 ここまでの説明でお分かりと思いますが、幽霊型 `z` は使わないので、定義していません。
 
-```OCaml
+{% highlight OCaml %}
 module KInt : sig
   type ('m, 'n) t = private int
   type 'n s
@@ -263,13 +263,13 @@ end = struct
   let add m n = m + n
   let sub m n = m - n
 end
-```
+{% endhighlight %}
 
 ## 試してみる
 
 先程の `2 + 3` を対話環境で試してみましょう。
 
-```OCaml
+{% highlight OCaml %}
 # open KInt;;
 # let two = succ (succ zero);;
 val two : ('_a s s, '_a) t = 2
@@ -277,7 +277,7 @@ val two : ('_a s s, '_a) t = 2
 val three : ('_a s s s, '_a) t = 3
 # add two three;;
 - : ('_a s s s s s, '_a) t = 5
-```
+{% endhighlight %}
 
 ちゃんと動作しました！
 狐につままれたような気分ですが、感動的ですね！

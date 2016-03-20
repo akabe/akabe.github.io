@@ -85,13 +85,13 @@ int main () {
 では、本当にコンパイル時に計算されているか、アセンブリを見てみます。
 `g++ -S fact.cpp` とすると、`fact.s` にアセンブリが出力されます。
 
-```asm
+{% highlight asm %}
 ...
 	movl	$720, 4(%esp)
 	movl	$.LC0, (%esp)
 	call	printf
 ...
-```
+{% endhighlight %}
 
 ちゃんと、コンパイル時に階乗が計算され、アセンブリ・レベルでは即値になっています。
 C++ 恐るべし、といったところですが、もっと恐ろしいことをこれからやってみます。
@@ -467,7 +467,7 @@ int main () {
 ちゃんと、ソート済みのリストの各要素を順番に `printf` するコードが吐き出されており、
 コンパイル時ソートが実現できています！
 
-```asm
+{% highlight asm %}
 ...
 	call	__print_7
 	movl	$8, 4(%esp)
@@ -497,7 +497,7 @@ __print_1:
 	movl	$.LC0, (%esp)
 	call	printf
 ...
-```
+{% endhighlight %}
 
 # まとめ
 

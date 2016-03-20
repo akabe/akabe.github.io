@@ -21,11 +21,11 @@ category: 型レベルプログラミング
 ちなみに、念の為紹介しておくと、
 型レベル自然数を使った場合の型安全な `map2` は次のようになります。
 
-```OCaml
+{% highlight OCaml %}
 type ('a, 'n) sized_list (* 'a 型の要素を持つ、長さ 'n のリスト *)
 
 val map2 : ('a -> 'b -> 'c) -> ('a, 'n) sized_list -> ('b, 'n) sized_list -> ('c, 'n) sized_list
-```
+{% endhighlight %}
 
 `map2` の型の第二引数と第三引数の長さとして、同じ型変数 `'n` を与えているため、
 異なる長さのリストを渡すと、型エラーを起こします。
@@ -41,7 +41,7 @@ val map2 : ('a -> 'b -> 'c) -> ('a, 'n) sized_list -> ('b, 'n) sized_list -> ('c
 （今回の主役は実行時エラーを起こす可能性のある `map2` の方で、
 `map` はオマケで紹介しているだけです。）
 
-```OCaml
+{% highlight OCaml %}
 (* 要素の型が 'a の二分木 *)
 type 'a btree =
   | Empty
@@ -57,7 +57,7 @@ let rec map2 f a b = match a, b with
   | Empty, Empty -> Empty
   | Node (x, a, b), Node (y, c, d) -> Node (f x y, map2 f a c, map2 f b d)
   | _ -> failwith "different tree structures" (* 例外を投げる *)
-```
+{% endhighlight %}
 
 言うまでもありませんが、`map2` は構造の異なる木を受け取ると、
 例外を投げるという悲しい性があります。
@@ -69,10 +69,10 @@ let rec map2 f a b = match a, b with
 
 ペアノ形式では自然数を、ゼロに対応する記号と、後者 (`n + 1`) に対応する記号で表現します。
 
-```OCaml
+{% highlight OCaml %}
 type nat = Z        (* ゼロに対応 *)
          | S of nat (* 後者 (n + 1) に対応 *)
-```
+{% endhighlight %}
 
 [型レベル自然数]({{ site.baseurl }}/2015/06/PhantomTypePeanoTypeNat/#型レベル自然数)
 のときは、これを `z` と `'n s` という型に対応させ、
@@ -82,24 +82,24 @@ type nat = Z        (* ゼロに対応 *)
 
 今回の二分木では、要素を無視すると、
 
-```OCaml
+{% highlight OCaml %}
 type t = Empty
        | Node of t * t
-```
+{% endhighlight %}
 
 というコンストラクタで構成されるので、
 
-```OCaml
+{% highlight OCaml %}
 type empty
 type ('left, 'right) node
-```
+{% endhighlight %}
 
 という 2 つの幽霊型で構造を表すことができます。
 幽霊型でエンコードした木の構造は
 
-```OCaml
+{% highlight OCaml %}
 type ('a, 'stru) stru_btree = 'a btree
-```
+{% endhighlight %}
 
 の型変数 `'stru` に代入することにします。
 例えば、
@@ -113,12 +113,12 @@ type ('a, 'stru) stru_btree = 'a btree
 ということになります。
 したがって、
 
-```OCaml
+{% highlight OCaml %}
 val map2 : ('a -> 'b -> 'c) ->
            ('a, 'stru) stru_btree ->
            ('b, 'stru) stru_btree ->
            ('c, 'stru) stru_btree
-```
+{% endhighlight %}
 
 とすれば、`map2` に渡された木の構造が等しい場合にのみ、型検査を通過するようになります。
 
@@ -126,7 +126,7 @@ val map2 : ('a -> 'b -> 'c) ->
 
 ここまでのアイディアが理解できれば、後はひたすら手を動かすのみです。
 
-```OCaml
+{% highlight OCaml %}
 module M : sig
   type empty                    (* 木構造を表現するための幽霊型 *)
   type ('left, 'right) node   (* 木構造を表現するための幽霊型 *)
@@ -156,32 +156,32 @@ end = struct
     | Node (x, a, b), Node (y, c, d) -> Node (f x y, map2 f a c, map2 f b d)
     | _ -> assert false (* この行が実行されないことを、幽霊型が保証してくれる *)
 end
-```
+{% endhighlight %}
 
 試しに使ってみると、
 
-```OCaml
+{% highlight OCaml %}
 # open M;;
 # let t1 = node 42 empty empty;;
 val t1 : (int, (empty, empty) node) stru_btree = <abstr>
 # let t2 = node 123 empty t1;;
 val t2 : (int, (empty, (empty, empty) node) node) stru_btree = <abstr>
-```
+{% endhighlight %}
 
 ちゃんと、狙った通りの型が付いていることがわかります。
 `map2` についても、次のように同じ構造の木だと成功して、
 
-```OCaml
+{% highlight OCaml %}
 # map2 (+) t1 t1;;
 - : (int, (empty, empty) node) stru_btree = <abstr>
-```
+{% endhighlight %}
 
 違う構造の木を渡すと型エラーを起こします。
 
-```OCaml
+{% highlight OCaml %}
 # map2 (+) t1 t2;;
 Error: This expression has type (int, (empty, (empty, empty) node) node) stru_btree
        but an expression was expected of type
          (int, (empty, empty) node) stru_btree
        Type (empty, empty) node is not compatible with type empty
-```
+{% endhighlight %}

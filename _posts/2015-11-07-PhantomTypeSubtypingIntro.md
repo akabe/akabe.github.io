@@ -96,7 +96,7 @@ C や Java における、整数から浮動小数点数への暗黙の型変換
 今回は、幽霊型トリックの話なので、実行の効率とかは無視します。
 プログラムは以下のようになります。
 
-```OCaml
+{% highlight OCaml %}
 module M1 : sig
   type 'a t
   val int : int -> [> `Int ] t                          (* 整数を wrap する *)
@@ -120,7 +120,7 @@ end = struct
     | Int x, Int y -> Int (x mod y)
     | _ -> assert false (* 幽霊型が浮動小数点数は渡されないことを保証する *)
 end
-```
+{% endhighlight %}
 
 最大のポイントは、「幽霊型変数 `'a` に多相バリアント型を代入し、
 多相バリアント型の部分型付けを利用して、`'a t` に部分型付けを導入」している点です。
@@ -135,23 +135,23 @@ end
 言葉で説明するよりも、対話環境で型を見ながら、うまくいくのか確認してみましょう。
 例えば、
 
-```OCaml
+{% highlight OCaml %}
 # open M1;;
 # let x = (int 42) + (int 123);;
 val x : _[> `Int ] t = <abstr>
 # to_string x;;
 - : bytes = "Int 165"
-```
+{% endhighlight %}
 
 というように、整数同士の加算では ``[> `Int] t``（整数型）が返ってきます。
 今度は、整数と浮動小数点数を加算してみます。
 
-```OCaml
+{% highlight OCaml %}
 # let y = (int 42) + (float 123.);;
 val y : _[> `Int | `NonInt ] t = <abstr>
 # to_string y;;
 - : bytes = "Float 165."
-```
+{% endhighlight %}
 
 戻り値は ``[> `Int | `NonInt ] t``（浮動小数点数型）を持っています。
 ``[> `Int ] t``（整数型）から ``[> `Int | `NonInt ] t``
@@ -159,7 +159,7 @@ val y : _[> `Int | `NonInt ] t = <abstr>
 
 では、次は、浮動小数点数型から整数型への変換（さっきとは逆方向の変換）が「失敗」することを確認します。
 
-```OCaml
+{% highlight OCaml %}
 # mod (int 42) (int 3);; (* 整数同士の剰余算は成功する *)
 - : _[> `Int ] t = <abstr>
 # mod (int 42) (float 3.);; (* 浮動小数点数が混ざると失敗する *)
@@ -167,19 +167,19 @@ File "subtyping.ml", line 34, characters 21-31:
 Error: This expression has type [> `Int | `NonInt ] t
        but an expression was expected of type [< `Int ] t
        The second variant type does not allow tag(s) `NonInt
-```
+{% endhighlight %}
 
 ちなみに、上のコードでは `(mod)` の型を
 
-```OCaml
+{% highlight OCaml %}
 val (mod) : [< `Int ] t -> [< `Int ] t -> [> `Int ] t
-```
+{% endhighlight %}
 
 と書きましたが、今回の例に限って言えば、
 
-```OCaml
+{% highlight OCaml %}
 val (mod) : [ `Int ] t -> [ `Int ] t -> [> `Int ] t
-```
+{% endhighlight %}
 
 と、引数型に反変性の指定（`[< ...]`）をしなくても動作しますが、
 もっと複雑な部分型関係を扱う場合には、付けておいたほうが無難かと思います。
@@ -189,7 +189,7 @@ val (mod) : [ `Int ] t -> [ `Int ] t -> [> `Int ] t
 OCaml ではクラス型に対して構造的部分型が導入されているので、
 多相バリアントではなく、クラス型を使っても、一応同じことができます。
 
-```OCaml
+{% highlight OCaml %}
 module M2 : sig
   type int_tag = < foo : unit; baz : unit >
   type float_tag = < foo : unit >
@@ -218,7 +218,7 @@ end = struct
     | Int x, Int y -> Int (x mod y)
     | _ -> assert false (* 幽霊型が浮動小数点数は渡されないことを保証する *)
 end
-```
+{% endhighlight %}
 
 クラス型 `< f1 : t1; f2 : t2; ... >` は型 `t1` のフィールド `f1`、型 `t2` のフィールド `f2`、･･･
 を持つクラス、という意味です。
@@ -237,10 +237,10 @@ OCaml は型変数 1 つ 1 つについて、共変・反変・不変のいず�
 基本的に、モジュールの利用者側から見た使い方は、多相バリアントの場合と同じですが、
 部分型関係による型の付け替えには型強制 (coercion) が必要です。
 
-```OCaml
+{% highlight OCaml %}
 # (int 42 :> float_tag t) + (float 123.);;
 - : float_tag t = <abstr>
-```
+{% endhighlight %}
 
 私は、わざわざ `:>` を書かなければいけない理由を知りませんが、
 OCaml の仕様なので、兎に角書かなければいけない、ということは確かです。

@@ -13,9 +13,7 @@ qiita_username: 'akabe'
 gaaccount: 'UA-58142361-1'
 
 permalink: /:year/:month/:title
+gems: [jekyll-paginate]
 paginate: 5
 
-highlighter: pygments
-markdown: redcarpet
-redcarpet:
-  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "tables", "strikethrough", "with_toc_data"]
+markdown: kramdown
